@@ -1,17 +1,19 @@
 package br.edu.fatecguarulhos.escaneiaai.paginas;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.zxing.integration.android.IntentIntegrator;
 
 import br.edu.fatecguarulhos.escaneiaai.R;
 import br.edu.fatecguarulhos.escaneiaai.components.CardEvento;
+import br.edu.fatecguarulhos.escaneiaai.util.QrCodeManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +30,8 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private FloatingActionButton btnQrCode;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -67,12 +71,21 @@ public class HomeFragment extends Fragment {
         assert container != null;
         View v = inflater.inflate(R.layout.fragment_home, container, false);
         LinearLayout ll = v.findViewById(R.id.layout_dados);
-       for(int i = 0; i < 50; i++){
+        for(int i = 0; i < 5; i++){
             CardEvento card = new CardEvento(getContext());
             card.alterarConteudo("Meu titulo " + i, "meu conteudo " + i);
             ll.addView(card);
         }
-
+        btnQrCode = v.findViewById(R.id.fab);
+        btnQrCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lerQrCode();
+            }
+        });
         return v;
+    }
+    public void lerQrCode(){
+        QrCodeManager.lerQrCode(new IntentIntegrator(getActivity()));
     }
 }
