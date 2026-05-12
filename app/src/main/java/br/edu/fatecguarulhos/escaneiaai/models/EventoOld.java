@@ -1,10 +1,8 @@
 package br.edu.fatecguarulhos.escaneiaai.models;
 
-import com.google.type.DateTime;
-
 import java.time.LocalDateTime;
 
-public class Evento {
+public class EventoOld {
     private String id;
     private String titulo;
     private LocalDateTime dataInicio;

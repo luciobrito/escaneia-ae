@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.zxing.integration.android.IntentIntegrator;
 
+import br.edu.fatecguarulhos.escaneiaai.Evento;
 import br.edu.fatecguarulhos.escaneiaai.R;
 import br.edu.fatecguarulhos.escaneiaai.components.CardEvento;
 import br.edu.fatecguarulhos.escaneiaai.util.QrCodeManager;
@@ -68,12 +69,16 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        QrCodeManager.eventoList.clear();
         assert container != null;
         View v = inflater.inflate(R.layout.fragment_home, container, false);
         LinearLayout ll = v.findViewById(R.id.layout_dados);
         for(int i = 0; i < 5; i++){
             CardEvento card = new CardEvento(getContext());
-            card.alterarConteudo("Meu titulo " + i, "meu conteudo " + i);
+            //card.alterarConteudo("Meu titulo " + i, "meu conteudo " + i);
+            Evento e = new Evento(("Palestra " + i));
+            QrCodeManager.eventoList.add(card);
+            card.alterarConteudo(e);
             ll.addView(card);
         }
         btnQrCode = v.findViewById(R.id.fab);

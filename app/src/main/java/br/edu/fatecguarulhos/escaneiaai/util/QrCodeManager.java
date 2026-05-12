@@ -8,12 +8,17 @@ import androidx.annotation.Nullable;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
+import br.edu.fatecguarulhos.escaneiaai.Evento;
+import br.edu.fatecguarulhos.escaneiaai.components.CardEvento;
 
 public class QrCodeManager {
+    public static List<CardEvento> eventoList = new ArrayList<>();
     public static void lerQrCode(IntentIntegrator intentIntegrator){
         //IntentIntegrator intentIntegrator = new IntentIntegrator(v.getActivity());
         intentIntegrator.setOrientationLocked(false);
