@@ -1,16 +1,16 @@
 package br.edu.fatecguarulhos.escaneiaai;
 
-import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -23,12 +23,13 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationBarView;
-import com.google.firebase.Firebase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import br.edu.fatecguarulhos.escaneiaai.paginas.HomeFragment;
+import br.edu.fatecguarulhos.escaneiaai.paginas.PaginaEventos;
+import br.edu.fatecguarulhos.escaneiaai.util.QrCodeManager;
 
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
@@ -71,22 +72,62 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void configurarNavbar(){
+        iniciarMenuItem(R.id.item_eventos);
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                /*
                 int id = menuItem.getItemId();
                 Fragment selectedFragment = null;
                 if(id == R.id.item_eventos){
                     selectedFragment = new HomeFragment();
-
-
                 }
-                    if(selectedFragment != null){
+                if(selectedFragment != null){
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
                 }
+                */
+                //initiateEventoMenuItem(id);
+                int id = menuItem.getItemId();
+                iniciarMenuItem(id);
                 return true;
             }
         });
+    }
+
+    private void iniciarMenuItem(int id) {
+        Fragment selectedFragment = null;
+        if (id == R.id.item_eventos) {
+            selectedFragment = new HomeFragment();
+        }
+        if(id == R.id.item_perfil){
+            selectedFragment = new PaginaEventos();
+        }
+        if (selectedFragment != null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+        }
+
+    }
+    // Resultado da leitura do QR code na tela "HomeFragment"
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        /*
+        IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(intentResult != null){
+            String contents = intentResult.getContents();
+            if(contents != null){
+                String output = intentResult.getContents();
+                Toast.makeText(this , output, Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+         */
+        String msgQrCode = QrCodeManager.getResultadoLeitor(requestCode, resultCode, data);
+        if(msgQrCode == null){
+            super.onActivityResult(requestCode, resultCode, data);
+        } else {
+            Toast.makeText(this, msgQrCode, Toast.LENGTH_SHORT).show();
+        }
     }
     private void add(){
         //layoutEventos = findViewById(R.id.layout_eventos);

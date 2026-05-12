@@ -6,7 +6,7 @@
         android:icon="@drawable/baseline_chair_24"
         android:title="Eventos"/>
     <item
-        android:id="@+id/item_2"
+        android:id="@+id/item_perfil"
         android:enabled="true"
         android:title="Perfil"/>
 
