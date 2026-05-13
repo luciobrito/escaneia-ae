@@ -6,14 +6,12 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import br.edu.fatecguarulhos.escaneiaai.Evento;
-import br.edu.fatecguarulhos.escaneiaai.MainActivity;
+import br.edu.fatecguarulhos.escaneiaai.models.Evento;
 import br.edu.fatecguarulhos.escaneiaai.R;
 import br.edu.fatecguarulhos.escaneiaai.TelaEvento;
 

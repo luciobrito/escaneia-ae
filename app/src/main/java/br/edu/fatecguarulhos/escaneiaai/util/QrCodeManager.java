@@ -14,7 +14,6 @@ import java.util.Objects;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
-import br.edu.fatecguarulhos.escaneiaai.Evento;
 import br.edu.fatecguarulhos.escaneiaai.components.CardEvento;
 
 public class QrCodeManager {

@@ -2,6 +2,7 @@ package br.edu.fatecguarulhos.escaneiaai;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,6 +34,11 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import br.edu.fatecguarulhos.escaneiaai.models.Evento;
+import br.edu.fatecguarulhos.escaneiaai.models.Participante;
 import br.edu.fatecguarulhos.escaneiaai.paginas.HomeFragment;
 import br.edu.fatecguarulhos.escaneiaai.paginas.PaginaEventos;
 import br.edu.fatecguarulhos.escaneiaai.util.QrCodeManager;
@@ -139,7 +145,12 @@ public class MainActivity extends AppCompatActivity {
     public void dbAddTest(){
         FirebaseDatabase database  = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
-        //Evento evento = new Evento("Grande evento3");
+        Evento e = new Evento("Grande evento3");
+        List<Participante> p = new ArrayList<>();
+        p.add(new Participante("Fulano"));
+        p.add(new Participante("Ciclano"));
+        p.add(new Participante("Fulano2"));
+        e.setParticipantes(p);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -152,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("foi nao");
             }
         });
-        //myRef.child("eventos").push().setValue(evento);
+        myRef.child("eventos").push().setValue(e);
 
 
     }

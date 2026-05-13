@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.zxing.integration.android.IntentIntegrator;
 
-import br.edu.fatecguarulhos.escaneiaai.Evento;
+import br.edu.fatecguarulhos.escaneiaai.models.Evento;
 import br.edu.fatecguarulhos.escaneiaai.R;
 import br.edu.fatecguarulhos.escaneiaai.components.CardEvento;
 import br.edu.fatecguarulhos.escaneiaai.util.QrCodeManager;

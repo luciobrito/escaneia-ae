@@ -16,5 +16,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TELA DO PERFIL WIP" />
+
+        <Button
+            android:id="@+id/btnTempAddEvento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TEMPORARIO add evento" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
