@@ -1,11 +1,7 @@
 package br.edu.fatecguarulhos.escaneiaai;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -66,11 +62,9 @@ public class MainActivity extends AppCompatActivity {
         //text_teste = findViewById(R.id.text_teste);
         //dbConnect();
         //add();
+
         inicializarValores();
         configurarNavbar();
-        //dbConnect();
-        databaseConnectionTest();
-        testeDbLeitura();
     }
     private void inicializarValores(){
         bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -88,17 +82,6 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                /*
-                int id = menuItem.getItemId();
-                Fragment selectedFragment = null;
-                if(id == R.id.item_eventos){
-                    selectedFragment = new HomeFragment();
-                }
-                if(selectedFragment != null){
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
-                }
-                */
-                //initiateEventoMenuItem(id);
                 int id = menuItem.getItemId();
                 iniciarMenuItem(id);
                 return true;
@@ -112,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
             selectedFragment = new HomeFragment();
         }
         if(id == R.id.item_perfil){
-            //dbConnect();
             selectedFragment = new PaginaEventos();
         }
         if (selectedFragment != null) {
@@ -123,18 +105,6 @@ public class MainActivity extends AppCompatActivity {
     // Resultado da leitura do QR code na tela "HomeFragment"
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        /*
-        IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if(intentResult != null){
-            String contents = intentResult.getContents();
-            if(contents != null){
-                String output = intentResult.getContents();
-                Toast.makeText(this , output, Toast.LENGTH_SHORT).show();
-            }
-        }else{
-            super.onActivityResult(requestCode, resultCode, data);
-        }
-         */
         String msgQrCode = QrCodeManager.getResultadoLeitor(requestCode, resultCode, data);
         if(msgQrCode == null){
             super.onActivityResult(requestCode, resultCode, data);
@@ -151,34 +121,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void dbConnect(){
-        System.out.println("Iniciou");
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference cr = db.collection("eventos");
         Evento evento = new Evento("Grande evento");
         cr.add(evento).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
-                //text_teste.setText("Dados enviados com sucesso!");
-                //Toast.makeText(this, "sucesso", Toast.LENGTH_SHORT).show();
-                showToast("sucesso");
                 System.out.println("sucesso");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                showToast(e.getMessage());
                 System.out.println(e.getMessage());
-                //text_teste.setText("Erro: " + e.getMessage());
-                //Toast.makeText(getApplicationContext(), "Erro " + e.getMessage().toString(), Toast.LENGTH_SHORT).show();
             }
         });
-        System.out.println("Acabou");
     }
-    public void showToast(String msg){
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-    }
-
-    public void databaseConnectionTest(){
+    public void dbAddTest(){
         FirebaseDatabase database  = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
         //Evento evento = new Evento("Grande evento3");
@@ -186,13 +144,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String value = snapshot.getValue().toString();
-                //Log.d("", "Value is: " + value);
                 System.out.println("DADOs -> " + value);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                //Log.w("teste", "failed toreadvalue.", error.toException());
                 System.out.println("foi nao");
             }
         });
@@ -201,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void testeDbLeitura(){
+    public void dbReadTest(){
         FirebaseDatabase database  = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
         myRef.child("eventos").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
