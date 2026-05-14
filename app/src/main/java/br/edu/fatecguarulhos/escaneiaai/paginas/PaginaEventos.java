@@ -2,10 +2,12 @@ package br.edu.fatecguarulhos.escaneiaai.paginas;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -25,6 +27,7 @@ public class PaginaEventos extends Fragment {
     private String mParam1;
     private String mParam2;
     private Button btnAdd, btnLer;
+    private TextView textIdDispositivo;
     private TempDbManager dbConnection;
 
     public PaginaEventos(){};
@@ -61,6 +64,9 @@ public class PaginaEventos extends Fragment {
                 lerEventosTemp();
             }
         });
+        String idDispositivo = Settings.Secure.getString(v.getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        textIdDispositivo = v.findViewById(R.id.id_dispositivo);
+        textIdDispositivo.setText("Id do dispositivo:" + idDispositivo);
         return v;
     }
 
