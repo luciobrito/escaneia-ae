@@ -35,7 +35,7 @@ public class CardEvento extends ConstraintLayout {
         card.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //Toast.makeText(context, this.toString(), Toast.LENGTH_SHORT).show();
+                // definir ação ao clicar em um cartão de evento
                 Intent it = new Intent(v.getContext() , TelaEvento.class);
                 it.putExtra("titulo", titulo);
                 it.putExtra("id",evento.getId());
@@ -43,16 +43,9 @@ public class CardEvento extends ConstraintLayout {
             }
         });
     }
-    public void alterarConteudo(String titulo, String corpo){
-        TextView textTitulo, textCorpo;
-        textTitulo = findViewById(R.id.textView_tituloCard);
-        textCorpo = findViewById(R.id.textView_corpoCard);
-        textTitulo.setText(titulo);
-        textCorpo.setText(corpo);
-    }
-    public void alterarConteudo(Evento evento){
-        this.evento = evento;
-        titulo = this.evento.getTitulo();
+    public void alterarConteudo(Evento e){
+        evento = e;
+        titulo = evento.getTitulo();
         corpo = "corpo";
         TextView textTitulo, textCorpo;
         textTitulo = findViewById(R.id.textView_tituloCard);

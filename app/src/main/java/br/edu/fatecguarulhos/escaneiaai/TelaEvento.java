@@ -1,7 +1,6 @@
 package br.edu.fatecguarulhos.escaneiaai;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,10 +15,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationBarMenu;
-import com.google.android.material.navigation.NavigationBarView;
 
-import br.edu.fatecguarulhos.escaneiaai.util.QrCodeManager;
+import br.edu.fatecguarulhos.escaneiaai.paginas.TelaQrCode;
 
 public class TelaEvento extends AppCompatActivity {
     private TextView txtTituloEvento;
@@ -36,26 +33,25 @@ public class TelaEvento extends AppCompatActivity {
             return insets;
         });
         Intent it = getIntent();
+        // coletar id do evento
         idEvento = it.getStringExtra("id");
         txtTituloEvento = findViewById(R.id.txtTituloEvento_actv_tela_evento);
-        String str = it.getStringExtra("titulo");
         txtTituloEvento.setText(it.getStringExtra("titulo"));
-        fabRetorno = findViewById(R.id.fabRetorno);
+        fabRetorno = findViewById(R.id.fabQrCode_telaEvento);
         fabRetorno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 telaQrCode();
             }
         });
-        //inicializarValores();
     }
     private void telaQrCode(){
-        //Bitmap qrCode = QrCodeManager.gerarQrCode("identificacao");
         Intent it  = new Intent(this, TelaQrCode.class);
+        // enviar id para uso na criação do qrCode
         it.putExtra("id",idEvento);
         startActivity(it);
     }
-
+    // appbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();

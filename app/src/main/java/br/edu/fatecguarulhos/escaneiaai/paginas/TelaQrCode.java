@@ -1,4 +1,4 @@
-package br.edu.fatecguarulhos.escaneiaai;
+package br.edu.fatecguarulhos.escaneiaai.paginas;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,6 +12,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import br.edu.fatecguarulhos.escaneiaai.R;
 import br.edu.fatecguarulhos.escaneiaai.util.QrCodeManager;
 
 public class TelaQrCode extends AppCompatActivity {

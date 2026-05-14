@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".paginas.HomeFragment">
+    tools:context=".paginas.ListaEventosFragment">
 
 
         <ScrollView
@@ -23,7 +23,7 @@
         android:layout_height="match_parent"
         >
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
+            android:id="@+id/fabAbrirLeitorQrCode_fragmentHome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"

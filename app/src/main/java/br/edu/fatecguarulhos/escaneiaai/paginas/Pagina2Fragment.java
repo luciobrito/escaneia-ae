@@ -9,24 +9,18 @@ import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
-import java.util.List;
-
 import br.edu.fatecguarulhos.escaneiaai.R;
-import br.edu.fatecguarulhos.escaneiaai.models.Evento;
-import br.edu.fatecguarulhos.escaneiaai.util.FirebaseCallback;
-import br.edu.fatecguarulhos.escaneiaai.util.DbManager;
 
-public class PaginaEventos extends Fragment {
+public class Pagina2Fragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private Button btnAdd, btnLer;
-    private DbManager dbConnection;
+    private Button btnAdd;
 
-    public PaginaEventos(){};
+    public Pagina2Fragment(){};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,7 +31,6 @@ public class PaginaEventos extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         */
-        dbConnection = new DbManager();
     }
 
     @Override
@@ -53,32 +46,12 @@ public class PaginaEventos extends Fragment {
                 execBtnAdd(v);
             }
         });
-        btnLer = v.findViewById(R.id.btnTempLer);
-        btnLer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                lerEventosTemp();
-            }
-        });
         return v;
     }
-
+    // ir para formulario de criação de evento
     public void execBtnAdd(View view){
         Intent it = new Intent(view.getContext(), FormCriarEvento.class);
         startActivity(it);
-    }
-    public void lerEventosTemp(){
-        dbConnection.lerTodos(new FirebaseCallback() {
-            @Override
-            public void onCallbackForAll(List<Evento> lista) {
-
-            }
-
-            @Override
-            public void onCallBackByid(Evento e) {
-
-            }
-        });
     }
 
 }
