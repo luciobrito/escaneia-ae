@@ -91,11 +91,38 @@ public class DbManager {
             }
         });
     }
-    public void updateEventoV1(Evento e, Participante p){
+    public void registrarEntradaParticipante(Evento e, Participante p) {
+
         DatabaseReference myRef = database.getReference("eventos").child(e.getId());
         List<Participante> participantes = e.getParticipantes();
         participantes.add(p);
         e.setParticipantes(participantes);
         myRef.setValue(e);
+
+/*
+        DatabaseReference myRef = database.getReference("eventos").
+                child(e.getId()).
+                child("participantes");
+        myRef.child(p.getNome()).setValue(p);
+*/
     }
-}
+    public void registrarSaidaParticipante(Evento e, Participante participante){
+        DatabaseReference myRef = database.getReference("eventos").child(e.getId());
+        List<Participante> lista = e.getParticipantes();
+        for(int i = 0; i < lista.size(); i++){
+            Participante p = lista.get(i);
+                if(
+                        p.getNome().equals(participante.getNome())
+                                && p.getEmail().equals(participante.getEmail())
+                                && p.getRa().equals(participante.getRa())
+                ) {
+                    lista.get(i).setSaida(true);
+                }
+            }
+        e.setParticipantes(lista);
+        myRef.setValue(e);
+        }
+    }
+
+
+

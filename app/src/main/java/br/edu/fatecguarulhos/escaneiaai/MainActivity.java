@@ -104,6 +104,11 @@ public class MainActivity extends AppCompatActivity {
     }
     public void confirmarEntrada(Evento e){
         DbManager dbConnection = new DbManager();
-        dbConnection.updateEventoV1(e, new Participante("Caio1"));
+        Participante p = new Participante();
+        p.setNome("p12");
+        p.setEmail("email1");
+        p.setRa("123");
+        dbConnection.registrarEntradaParticipante(e, p);
+        //dbConnection.registrarSaidaParticipante(e, p);
     }
 }
