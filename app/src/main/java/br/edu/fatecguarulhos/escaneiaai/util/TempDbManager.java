@@ -42,8 +42,10 @@ public class TempDbManager {
         firestore = FirebaseFirestore.getInstance();
     }
     public void adicionarEvento(Evento e){
-        DatabaseReference myRef = database.getReference();
-        myRef.child("eventos").push().setValue(e);
+        DatabaseReference myRef = database.getReference("eventos");
+        String eventoId = myRef.push().getKey();
+        e.setId(eventoId);
+        myRef.child(eventoId).setValue(e);
     }
 
 

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Evento {
-    private String titulo;
+    private String titulo, id;
     private List<Participante> participantes = new ArrayList<>();
     public Evento(String titulo){
         this.titulo = titulo;
@@ -29,5 +29,13 @@ public class Evento {
 
     public void setParticipantes(List<Participante> participantes) {
         this.participantes = participantes;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
