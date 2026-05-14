@@ -24,6 +24,7 @@ import br.edu.fatecguarulhos.escaneiaai.util.QrCodeManager;
 public class TelaEvento extends AppCompatActivity {
     private TextView txtTituloEvento;
     private FloatingActionButton fabRetorno;
+    private String idEvento;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,14 +36,24 @@ public class TelaEvento extends AppCompatActivity {
             return insets;
         });
         Intent it = getIntent();
+        idEvento = it.getStringExtra("id");
         txtTituloEvento = findViewById(R.id.txtTituloEvento_actv_tela_evento);
         String str = it.getStringExtra("titulo");
         txtTituloEvento.setText(it.getStringExtra("titulo"));
+        fabRetorno = findViewById(R.id.fabRetorno);
+        fabRetorno.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                telaQrCode();
+            }
+        });
         //inicializarValores();
     }
-    private void imprimirQrCode(View view){
-        Bitmap qrCode = QrCodeManager.gerarQrCode("identificacao");
-
+    private void telaQrCode(){
+        //Bitmap qrCode = QrCodeManager.gerarQrCode("identificacao");
+        Intent it  = new Intent(this, TelaQrCode.class);
+        it.putExtra("id",idEvento);
+        startActivity(it);
     }
 
     @Override

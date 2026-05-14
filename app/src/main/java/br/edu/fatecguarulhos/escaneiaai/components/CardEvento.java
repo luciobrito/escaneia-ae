@@ -38,6 +38,7 @@ public class CardEvento extends ConstraintLayout {
                 //Toast.makeText(context, this.toString(), Toast.LENGTH_SHORT).show();
                 Intent it = new Intent(v.getContext() , TelaEvento.class);
                 it.putExtra("titulo", titulo);
+                it.putExtra("id",evento.getId());
                 v.getContext().startActivity(it);
             }
         });
@@ -50,7 +51,8 @@ public class CardEvento extends ConstraintLayout {
         textCorpo.setText(corpo);
     }
     public void alterarConteudo(Evento evento){
-        titulo = evento.getTitulo();
+        this.evento = evento;
+        titulo = this.evento.getTitulo();
         corpo = "corpo";
         TextView textTitulo, textCorpo;
         textTitulo = findViewById(R.id.textView_tituloCard);

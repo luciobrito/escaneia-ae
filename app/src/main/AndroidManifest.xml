@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents">
         <activity
+            android:name=".TelaQrCode"
+            android:exported="false" />
+        <activity
             android:name=".paginas.FormCriarEvento"
             android:exported="false" />
         <activity
