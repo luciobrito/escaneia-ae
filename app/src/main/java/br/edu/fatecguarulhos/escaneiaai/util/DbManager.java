@@ -50,7 +50,7 @@ public class DbManager {
 
     public void lerTodos(FirebaseCallback callback) {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("eventos");
-
+/*
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -61,6 +61,31 @@ public class DbManager {
                     listaEventos.add(evento);
                 }
                 callback.onCallbackForAll(listaEventos);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("Firebase", "Falha na leitura.", databaseError.toException());
+            }
+        });
+
+ */
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<Evento> listaEventos = new ArrayList<Evento>();
+                //listaEventos.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Evento evento = postSnapshot.getValue(Evento.class);
+                    listaEventos.add(evento);
+                }
+                try{
+                    callback.onCallbackForAll(listaEventos);
+                } catch (NullPointerException npe){
+                    System.out.println("Erro -> " + npe.getMessage());
+                } catch (Exception e){
+                    System.out.println("Erro -> " + e.getMessage());
+                }
             }
 
             @Override
@@ -99,12 +124,6 @@ public class DbManager {
         e.setParticipantes(participantes);
         myRef.setValue(e);
 
-/*
-        DatabaseReference myRef = database.getReference("eventos").
-                child(e.getId()).
-                child("participantes");
-        myRef.child(p.getNome()).setValue(p);
-*/
     }
     public void registrarSaidaParticipante(Evento e, Participante participante){
         DatabaseReference myRef = database.getReference("eventos").child(e.getId());

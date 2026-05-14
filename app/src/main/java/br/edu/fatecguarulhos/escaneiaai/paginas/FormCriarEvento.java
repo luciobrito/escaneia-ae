@@ -109,7 +109,6 @@ public class FormCriarEvento extends AppCompatActivity {
             }, calendario.get(Calendar.HOUR_OF_DAY), calendario.get(Calendar.MINUTE), false).show();
 
         }, calendario.get(Calendar.YEAR), calendario.get(Calendar.MONTH), calendario.get(Calendar.DAY_OF_MONTH)).show();
-        datasValidas();
     }
 
     private boolean datasValidas(){

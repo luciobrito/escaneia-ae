@@ -40,6 +40,7 @@ public class ListaEventosFragment extends Fragment {
     private FloatingActionButton btnQrCode;
     private DbManager dbConnection;
     private List<Evento> eventos = new ArrayList<>();
+    private LinearLayout ll;
 
     public ListaEventosFragment() {
         // Required empty public constructor
@@ -79,16 +80,12 @@ public class ListaEventosFragment extends Fragment {
         QrCodeManager.eventoList.clear();
         assert container != null;
         View v = inflater.inflate(R.layout.fragment_home, container, false);
-        LinearLayout ll = v.findViewById(R.id.layout_dados);
+        ll = v.findViewById(R.id.layout_dados);
         dbConnection = new DbManager();
         dbConnection.lerTodos(new FirebaseCallback() {
             @Override
             public void onCallbackForAll(List<Evento> lista) {
-                for(int i = 0; i < lista.size(); i++){
-                    CardEvento card = new CardEvento((getContext()));
-                    card.alterarConteudo(lista.get(i));
-                    ll.addView(card);
-                }
+                atualizarListaEventos(lista);
             }
 
             @Override
@@ -109,5 +106,14 @@ public class ListaEventosFragment extends Fragment {
     // botão para abrir camera e ler QrCode
     public void lerQrCode(){
         QrCodeManager.lerQrCode(new IntentIntegrator(getActivity()));
+    }
+
+    public void atualizarListaEventos(List<Evento> lista){
+        ll.removeAllViewsInLayout();
+        for(int i = 0; i < lista.size(); i++){
+            CardEvento card = new CardEvento((getContext()));
+            card.alterarConteudo(lista.get(i));
+            ll.addView(card);
+        }
     }
 }
