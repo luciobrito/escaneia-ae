@@ -1,4 +1,4 @@
-package br.edu.fatecguarulhos.escaneiaai;
+package br.edu.fatecguarulhos.escaneiaai.paginas;
 
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +11,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import br.edu.fatecguarulhos.escaneiaai.R;
+import br.edu.fatecguarulhos.escaneiaai.util.TempDbManager;
 import br.edu.fatecguarulhos.escaneiaai.models.Evento;
 
 public class FormCriarEvento extends AppCompatActivity {

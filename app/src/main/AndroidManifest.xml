@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EscaneiaAi">
         <activity
-            android:name=".FormCriarEvento"
+            android:name=".paginas.FormCriarEvento"
             android:exported="false" />
         <activity
             android:name=".TelaEvento"

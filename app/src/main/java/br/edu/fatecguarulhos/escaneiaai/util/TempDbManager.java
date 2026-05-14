@@ -1,4 +1,4 @@
-package br.edu.fatecguarulhos.escaneiaai;
+package br.edu.fatecguarulhos.escaneiaai.util;
 
 import androidx.annotation.NonNull;
 
@@ -10,11 +10,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import br.edu.fatecguarulhos.escaneiaai.models.Evento;
-import br.edu.fatecguarulhos.escaneiaai.models.Participante;
 
 public class TempDbManager {
     private FirebaseDatabase database;
