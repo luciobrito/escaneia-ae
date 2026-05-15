@@ -14,12 +14,12 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.fatecguarulhos.escaneiaai.dao.EventoDao;
 import br.edu.fatecguarulhos.escaneiaai.models.Evento;
 import br.edu.fatecguarulhos.escaneiaai.R;
 import br.edu.fatecguarulhos.escaneiaai.components.CardEvento;
 import br.edu.fatecguarulhos.escaneiaai.util.FirebaseCallback;
 import br.edu.fatecguarulhos.escaneiaai.util.QrCodeManager;
-import br.edu.fatecguarulhos.escaneiaai.util.DbManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,7 +38,7 @@ public class PaginaListaEventos extends Fragment {
     private String mParam2;
 
     private FloatingActionButton btnQrCode;
-    private DbManager dbConnection;
+    private EventoDao dbConnection;
     private List<Evento> eventos = new ArrayList<>();
     private LinearLayout ll;
 
@@ -85,7 +85,7 @@ public class PaginaListaEventos extends Fragment {
     }
     private void inicializarComponentes(View v){
         ll = v.findViewById(R.id.layout_dados);
-        dbConnection = new DbManager();
+        dbConnection = new EventoDao();
         btnQrCode = v.findViewById(R.id.fabAbrirLeitorQrCode_fragmentHome);
 
     }
@@ -104,13 +104,13 @@ public class PaginaListaEventos extends Fragment {
         btnQrCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lerQrCode();
+                abrirCameraQrCode();
             }
         });
     }
 
     // botão para abrir camera e ler QrCode
-    public void lerQrCode(){
+    public void abrirCameraQrCode(){
         QrCodeManager.lerQrCode(new IntentIntegrator(getActivity()));
     }
 

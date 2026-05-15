@@ -19,13 +19,13 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import br.edu.fatecguarulhos.escaneiaai.R;
-import br.edu.fatecguarulhos.escaneiaai.util.DbManager;
+import br.edu.fatecguarulhos.escaneiaai.dao.EventoDao;
 import br.edu.fatecguarulhos.escaneiaai.models.Evento;
 
 public class TelaCriarEvento extends AppCompatActivity {
     private EditText edtNomeEvento, edtDataInicio, edtDataFim;
     private Button btnCriar, btnVoltar;
-    private DbManager dbConnection;
+    private EventoDao dbConnection;
     private Calendar calendario = Calendar.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class TelaCriarEvento extends AppCompatActivity {
         configurarComponentes();
     }
     private void inicializarComponentes(){
-        dbConnection = new DbManager();
+        dbConnection = new EventoDao();
         edtDataInicio = findViewById(R.id.edtdataInicio_formCriaEvento);
         edtDataFim = findViewById(R.id.edtdataFim_formCriaEvento);
         edtNomeEvento = findViewById(R.id.edtNomeEvento_formCriarEvento);

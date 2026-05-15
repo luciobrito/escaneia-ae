@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 
 import br.edu.fatecguarulhos.escaneiaai.R;
 import br.edu.fatecguarulhos.escaneiaai.telas.TelaCriarEvento;
-import br.edu.fatecguarulhos.escaneiaai.util.DbManager;
 
 public class PaginaEventos extends Fragment {
     private static final String ARG_PARAM1 = "param1";
@@ -23,7 +22,6 @@ public class PaginaEventos extends Fragment {
     private String mParam2;
     private Button btnAdd, btnLer;
     private TextView textIdDispositivo;
-    private DbManager dbConnection;
 
     public PaginaEventos(){};
 
@@ -36,7 +34,6 @@ public class PaginaEventos extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         */
-        dbConnection = new DbManager();
     }
 
     @Override

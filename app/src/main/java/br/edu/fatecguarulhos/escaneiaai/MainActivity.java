@@ -20,11 +20,12 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.List;
 
+import br.edu.fatecguarulhos.escaneiaai.dao.EventoDao;
+import br.edu.fatecguarulhos.escaneiaai.dao.ParticipanteDao;
 import br.edu.fatecguarulhos.escaneiaai.models.Evento;
 import br.edu.fatecguarulhos.escaneiaai.models.Participante;
 import br.edu.fatecguarulhos.escaneiaai.paginas.PaginaListaEventos;
 import br.edu.fatecguarulhos.escaneiaai.paginas.PaginaEventos;
-import br.edu.fatecguarulhos.escaneiaai.util.DbManager;
 import br.edu.fatecguarulhos.escaneiaai.util.FirebaseCallback;
 import br.edu.fatecguarulhos.escaneiaai.util.QrCodeManager;
 
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         if(msgQrCode == null){
             super.onActivityResult(requestCode, resultCode, data);
         } else {
-            DbManager dbConnection = new DbManager();
+            EventoDao dbConnection = new EventoDao();
             dbConnection.getEventoById(
                     msgFatiada[0],
                     // garantir q estejam sincronos
@@ -110,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         p.setNome("TesteEntrada");
         p.setEmail("email1");
         p.setRa("123");
-        DbManager dbConnection = new DbManager();
+        ParticipanteDao dbConnection = new ParticipanteDao();
         if(tipoQrCode.equals("entrada"))
             dbConnection.registrarEntradaParticipante(e, p);
         else if(tipoQrCode.equals("saida"))
@@ -120,6 +121,5 @@ public class MainActivity extends AppCompatActivity {
                             ,"Leitura inválida tente novamente"
                             , Toast.LENGTH_SHORT)
                     .show();
-        //dbConnection.registrarSaidaParticipante(e, p);
     }
 }
