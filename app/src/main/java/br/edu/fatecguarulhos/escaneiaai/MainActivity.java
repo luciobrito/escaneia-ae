@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         p.setNome("TesteEntrada");
         p.setEmail("email1");
         p.setRa("123");
-        ParticipanteDao dbConnection = new ParticipanteDao();
+        // ParticipanteDao dbConnection = new ParticipanteDao();
 
         if(tipoQrCode.equals("entrada"))
             //dbConnection.registrarEntradaParticipante(e, p);

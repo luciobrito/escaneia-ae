@@ -77,14 +77,6 @@ public class TelaRegistrarParticipante extends AppCompatActivity {
         return p;
         //dbConnection.registrarEntradaParticipante(evento, p);
     }
-    private void registrarEntrada(Participante p){
-        ParticipanteDao dbConnection = new ParticipanteDao();
-
-    }
-    private void registrarSaida(Participante p){
-        ParticipanteDao dbConnection = new ParticipanteDao();
-
-    }
 
 
 }
