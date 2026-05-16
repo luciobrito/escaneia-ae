@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import java.util.NoSuchElementException;
 
 import br.edu.fatecguarulhos.escaneiaai.R;
 import br.edu.fatecguarulhos.escaneiaai.dao.ParticipanteDao;
@@ -48,19 +51,13 @@ public class TelaRegistrarParticipante extends AppCompatActivity {
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Participante p = registrarParticipante();
-                if(p != null){
-                    ParticipanteDao dbConnection = new ParticipanteDao();
-                    if(isEntrada)
-                        dbConnection.registrarEntradaParticipante(eventoJson, p);
-                    else
-                        dbConnection.registrarSaidaParticipante(eventoJson, p);
-                    finish();
-                }
+
+                Participante p = criarParticipante();
+                registrarParticipante(p);
             }
         });
     }
-    private Participante registrarParticipante(){
+    private Participante criarParticipante(){
         Participante p = new Participante();
         String nome, email, ra;
         nome = edtNome.getText().toString();
@@ -71,6 +68,28 @@ public class TelaRegistrarParticipante extends AppCompatActivity {
         p.setRa(ra);
         return p;
     }
+    private void registrarParticipante(Participante p){
+        try{
+            if(p != null){
+                ParticipanteDao dbConnection = new ParticipanteDao();
+                if(isEntrada){
+                    dbConnection.registrarEntradaParticipante(eventoJson, p);
+                    Toast.makeText(this, "Entrada confirmada!", Toast.LENGTH_SHORT).show();
+                } else{
+                    dbConnection.registrarSaidaParticipante(eventoJson, p);
+                    Toast.makeText(this, "Saida confirmada!", Toast.LENGTH_SHORT).show();
+                }
+                finish();
+            }
+        } catch (IllegalArgumentException iae){
+            Toast.makeText(this, iae.getMessage(), Toast.LENGTH_SHORT).show();
+        } catch (NoSuchElementException nsee){
+            Toast.makeText(this, nsee.getMessage(), Toast.LENGTH_SHORT).show();
+        } catch (Exception e){
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
 
 }

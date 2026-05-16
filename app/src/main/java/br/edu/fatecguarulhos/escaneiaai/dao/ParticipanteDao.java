@@ -5,6 +5,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import br.edu.fatecguarulhos.escaneiaai.models.Evento;
 import br.edu.fatecguarulhos.escaneiaai.models.Participante;
@@ -18,28 +19,47 @@ public class ParticipanteDao {
     public void registrarEntradaParticipante(String eventoJson, Participante participante) {
         Evento evento = new Gson().fromJson(eventoJson, Evento.class);
         DatabaseReference myRef = database.getReference("eventos").child(evento.getId());
+        int idParticipante = encontrarParticipante(evento.getParticipantes(), participante);
+        boolean participanteRegistrado =  idParticipante != -1;
+        if(participanteRegistrado)
+            throw new IllegalArgumentException("Participante ja registrado");
+
         List<Participante> participantes = evento.getParticipantes();
         participantes.add(participante);
         evento.setParticipantes(participantes);
         myRef.setValue(evento);
+
 
     }
     public void registrarSaidaParticipante(String eventoJson, Participante participante){
         Evento evento = new Gson().fromJson(eventoJson, Evento.class);
         DatabaseReference myRef = database.getReference("eventos").child(evento.getId());
         List<Participante> lista = evento.getParticipantes();
+        int idParticipante = encontrarParticipante(lista, participante);
+        boolean entradaRegistrada = idParticipante != -1;
+        if(entradaRegistrada){
+            lista.get(idParticipante).setSaida(true);
+            evento.setParticipantes(lista);
+            myRef.setValue(evento);
+        } else
+            throw new NoSuchElementException("Participante não registrado");
+    }
+    public int encontrarParticipante(List<Participante> lista,Participante participante){
         for(int i = 0; i < lista.size(); i++){
             Participante p = lista.get(i);
-            if(
-                    p.getNome().equals(participante.getNome())
-                            && p.getEmail().equals(participante.getEmail())
-                            && p.getRa().equals(participante.getRa())
-            ) {
-                lista.get(i).setSaida(true);
-            }
+            boolean isParticipante = (
+                    p.getNome().equals(participante.getNome()) &&
+                            p.getEmail().equals(participante.getEmail()) &&
+                            p.getRa().equals(participante.getRa())
+                    );
+            if(isParticipante)
+                // participante encontrado se retorno for >= 0
+                // se for encontrado, ele retorna um numero diferente de -1, que é a posição na lista
+                return i;
         }
-        evento.setParticipantes(lista);
-        myRef.setValue(evento);
+        // participante não encontrado se retorno for  == -1
+        return -1;
     }
+
 
 }
