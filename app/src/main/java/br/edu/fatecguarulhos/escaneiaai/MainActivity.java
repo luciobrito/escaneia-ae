@@ -103,33 +103,30 @@ public class MainActivity extends AppCompatActivity {
 
                         @Override
                         public void onCallBackByid(Evento e) {
-                            resultLeituraQC(e, msgFatiada[1]);
+                            String jsonEvento = new Gson().toJson(e);
+                            resultLeituraQC(jsonEvento, msgFatiada[1]);
                         }
                     });
         }
     }
-    public void resultLeituraQC(Evento e, String tipoQrCode){
+    public void resultLeituraQC(String jsonEvento, String tipoQrCode){
         Participante p = new Participante();
         p.setNome("TesteEntrada");
         p.setEmail("email1");
         p.setRa("123");
-        // ParticipanteDao dbConnection = new ParticipanteDao();
-
         if(tipoQrCode.equals("entrada"))
-            //dbConnection.registrarEntradaParticipante(e, p);
-            formRegistrarCliente(e,true);
+            formRegistrarCliente(jsonEvento,true);
         else if(tipoQrCode.equals("saida"))
-            formRegistrarCliente(e,false);
-        //    dbConnection.registrarSaidaParticipante(e, p);
+            formRegistrarCliente(jsonEvento,false);
         else
             Toast.makeText(this
                             ,"Leitura inválida tente novamente"
                             , Toast.LENGTH_SHORT)
                     .show();
     }
-    private void formRegistrarCliente(Evento evento, boolean isEntrada){
+    private void formRegistrarCliente(String jsonEvento, boolean isEntrada){
         Intent it = new Intent(this, TelaRegistrarParticipante.class);
-        String jsonEvento = new Gson().toJson(evento);
+
         it.putExtra("eventoJson",jsonEvento);
         it.putExtra("isEntrada", isEntrada);
         startActivity(it);

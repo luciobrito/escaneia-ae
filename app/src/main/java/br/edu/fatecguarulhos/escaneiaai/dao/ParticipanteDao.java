@@ -2,6 +2,7 @@ package br.edu.fatecguarulhos.escaneiaai.dao;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -14,7 +15,8 @@ public class ParticipanteDao {
     public ParticipanteDao(){
         database = FirebaseDatabase.getInstance();
     }
-    public void registrarEntradaParticipante(Evento evento, Participante participante) {
+    public void registrarEntradaParticipante(String eventoJson, Participante participante) {
+        Evento evento = new Gson().fromJson(eventoJson, Evento.class);
         DatabaseReference myRef = database.getReference("eventos").child(evento.getId());
         List<Participante> participantes = evento.getParticipantes();
         participantes.add(participante);
@@ -22,7 +24,8 @@ public class ParticipanteDao {
         myRef.setValue(evento);
 
     }
-    public void registrarSaidaParticipante(Evento evento, Participante participante){
+    public void registrarSaidaParticipante(String eventoJson, Participante participante){
+        Evento evento = new Gson().fromJson(eventoJson, Evento.class);
         DatabaseReference myRef = database.getReference("eventos").child(evento.getId());
         List<Participante> lista = evento.getParticipantes();
         for(int i = 0; i < lista.size(); i++){

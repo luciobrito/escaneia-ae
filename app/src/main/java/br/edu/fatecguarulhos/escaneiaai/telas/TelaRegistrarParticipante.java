@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,16 +12,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.google.gson.Gson;
-
 import br.edu.fatecguarulhos.escaneiaai.R;
 import br.edu.fatecguarulhos.escaneiaai.dao.ParticipanteDao;
-import br.edu.fatecguarulhos.escaneiaai.models.Evento;
 import br.edu.fatecguarulhos.escaneiaai.models.Participante;
 
 public class TelaRegistrarParticipante extends AppCompatActivity {
     private boolean isEntrada;
-    private Evento evento;
+    private String eventoJson;
     private EditText edtNome, edtEmail, edtRa;
     private Button btnRegistrar;
     @Override
@@ -41,8 +37,7 @@ public class TelaRegistrarParticipante extends AppCompatActivity {
     private void inicializarValores(){
         Intent it = getIntent();
         isEntrada = it.getBooleanExtra("isEntrada", true);
-        String json = it.getStringExtra("eventoJson");
-        evento = new Gson().fromJson(json, Evento.class);
+        eventoJson = it.getStringExtra("eventoJson");
         edtNome = findViewById(R.id.edtNome_FormRegistrarParticipante);
         edtEmail = findViewById(R.id.edtEmail_FormRegistrarParticipante);
         edtRa = findViewById(R.id.edtRa_FormRegistrarParticipante);
@@ -57,9 +52,9 @@ public class TelaRegistrarParticipante extends AppCompatActivity {
                 if(p != null){
                     ParticipanteDao dbConnection = new ParticipanteDao();
                     if(isEntrada)
-                        dbConnection.registrarEntradaParticipante(evento, p);
+                        dbConnection.registrarEntradaParticipante(eventoJson, p);
                     else
-                        dbConnection.registrarSaidaParticipante(evento, p);
+                        dbConnection.registrarSaidaParticipante(eventoJson, p);
                     finish();
                 }
             }
@@ -75,7 +70,6 @@ public class TelaRegistrarParticipante extends AppCompatActivity {
         p.setEmail(email);
         p.setRa(ra);
         return p;
-        //dbConnection.registrarEntradaParticipante(evento, p);
     }
 
 
