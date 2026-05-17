@@ -2,6 +2,7 @@ package br.edu.fatecguarulhos.escaneiaai.paginas;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,9 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import br.edu.fatecguarulhos.escaneiaai.R;
+import br.edu.fatecguarulhos.escaneiaai.interfaces.Imprimivel;
 import br.edu.fatecguarulhos.escaneiaai.models.Evento;
-import br.edu.fatecguarulhos.escaneiaai.util.DbManager;
+//import br.edu.fatecguarulhos.escaneiaai.util.DbManager;
 import br.edu.fatecguarulhos.escaneiaai.util.FirebaseCallback;
 import br.edu.fatecguarulhos.escaneiaai.util.ImpressoraTermica;
 import br.edu.fatecguarulhos.escaneiaai.telas.TelaCriarEvento;
@@ -48,13 +50,13 @@ public class PaginaEventos extends Fragment {
         assert container != null;
         View v = inflater.inflate(R.layout.fragment_perfil, container, false);
         inicializarComponentes(v);
-        configurarComponentes();
+        configurarComponentes(v);
         return v;
     }
     private void inicializarComponentes(View v){
         btnAdd = v.findViewById(R.id.btnTempAddEvento);
     }
-    private void configurarComponentes(){
+    private void configurarComponentes(View v){
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +64,7 @@ public class PaginaEventos extends Fragment {
                 startActivity(it);
             }
         });
-<<<<<<< HEAD
+//<<<<<<< HEAD
         String idDispositivo = Settings.Secure.getString(v.getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         buttonImpressao = v.findViewById(R.id.button_impressao);
         /*buttonImpressao.setOnClickListener(new View.OnClickListener() {
@@ -71,24 +73,27 @@ public class PaginaEventos extends Fragment {
                 imprimir();
             }
         });*/
-        return v;
+        //return v;
     }
 
     public void execBtnAdd(View view){
-        Intent it = new Intent(view.getContext(), FormCriarEvento.class);
+        Intent it = new Intent(view.getContext(), TelaCriarEvento.class);
         startActivity(it);
     }
     private void imprimir(){
         try {
             Evento evento = new Evento("Evento de teste");
             ImpressoraTermica impressora = new ImpressoraTermica(getActivity(), getContext());
-            impressora.imprimirComPermissao(evento);
+            impressora.imprimirComPermissao((Imprimivel) evento);
         } catch (Exception e) {
             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-        }
-
+    }
+}
+/*
 =======
     }
 >>>>>>> refs/remotes/origin/main
 }
+
+ */

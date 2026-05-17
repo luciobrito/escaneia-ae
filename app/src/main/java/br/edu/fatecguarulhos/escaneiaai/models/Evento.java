@@ -34,7 +34,8 @@ public class Evento {
     }
 
     public Evento() {
-        qrCode = QrCodeManager.gerarQrCode(id);
+        if(id != null)
+            qrCode = QrCodeManager.gerarQrCode(id);
     }
 
     public String getTitulo() {

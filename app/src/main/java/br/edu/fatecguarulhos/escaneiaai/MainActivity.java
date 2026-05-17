@@ -30,6 +30,7 @@ import java.util.List;
 
 import br.edu.fatecguarulhos.escaneiaai.dao.EventoDao;
 import br.edu.fatecguarulhos.escaneiaai.dao.ParticipanteDao;
+import br.edu.fatecguarulhos.escaneiaai.interfaces.Imprimivel;
 import br.edu.fatecguarulhos.escaneiaai.models.Evento;
 import br.edu.fatecguarulhos.escaneiaai.models.Participante;
 import br.edu.fatecguarulhos.escaneiaai.paginas.PaginaListaEventos;
@@ -129,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
 
                 ImpressoraTermica i = new ImpressoraTermica(this, this);
-                i.imprimirComPermissao(new Evento("titulo"));
+                i.imprimirComPermissao((Imprimivel) new Evento("titulo"));
             }
 
         } catch (Exception e) {
@@ -142,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
         p.setEmail("email1");
         p.setRa("123");
         ParticipanteDao dbConnection = new ParticipanteDao();
+        /*
         if(tipoQrCode.equals("entrada"))
             dbConnection.registrarEntradaParticipante(e, p);
         else if(tipoQrCode.equals("saida"))
@@ -151,5 +153,7 @@ public class MainActivity extends AppCompatActivity {
                             ,"Leitura inválida tente novamente"
                             , Toast.LENGTH_SHORT)
                     .show();
+
+         */
     }
 }
