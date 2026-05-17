@@ -49,9 +49,6 @@ public class PaginaEventos extends Fragment {
         View v = inflater.inflate(R.layout.fragment_perfil, container, false);
         inicializarComponentes(v);
         configurarComponentes();
-        //String idDispositivo = Settings.Secure.getString(v.getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-        //textIdDispositivo = v.findViewById(R.id.id_dispositivo);
-        //textIdDispositivo.setText("Id do dispositivo:" + idDispositivo);
         return v;
     }
     private void inicializarComponentes(View v){

@@ -1,5 +1,6 @@
 package br.edu.fatecguarulhos.escaneiaai.paginas;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import br.edu.fatecguarulhos.escaneiaai.dao.EventoDao;
 import br.edu.fatecguarulhos.escaneiaai.models.Evento;
 import br.edu.fatecguarulhos.escaneiaai.R;
 import br.edu.fatecguarulhos.escaneiaai.components.CardEvento;
+import br.edu.fatecguarulhos.escaneiaai.util.CameraLeitorCode;
 import br.edu.fatecguarulhos.escaneiaai.util.FirebaseCallback;
 import br.edu.fatecguarulhos.escaneiaai.util.QrCodeManager;
 
@@ -111,7 +113,9 @@ public class PaginaListaEventos extends Fragment {
 
     // botão para abrir camera e ler QrCode
     public void abrirCameraQrCode(){
-        QrCodeManager.lerQrCode(new IntentIntegrator(getActivity()));
+        // jogar em outra activity para evitar erros com o onBackPressed
+        Intent it = new Intent(getContext(), CameraLeitorCode.class);
+        startActivity(it);
     }
 
     public void atualizarListaEventos(List<Evento> lista){
@@ -122,4 +126,5 @@ public class PaginaListaEventos extends Fragment {
             ll.addView(card);
         }
     }
+
 }

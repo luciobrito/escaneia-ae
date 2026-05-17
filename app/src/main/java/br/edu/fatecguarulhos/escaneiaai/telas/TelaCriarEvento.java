@@ -3,6 +3,7 @@ package br.edu.fatecguarulhos.escaneiaai.telas;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -83,6 +84,7 @@ public class TelaCriarEvento extends AppCompatActivity {
         e.setTitulo(edtNomeEvento.getText().toString());
         e.setDataInicio(edtDataInicio.getText().toString());
         e.setDataFim(edtDataFim.getText().toString());
+        e.setIdCriador(getIdCelular());
         dbConnection.adicionarEvento(e);
         Toast.makeText(this, "Evento criado com sucesso",Toast.LENGTH_SHORT).show();
         finish();
@@ -148,6 +150,11 @@ public class TelaCriarEvento extends AppCompatActivity {
             }
         }
         return false;
+    }
+    // para definir o criador do evento
+    private String getIdCelular(){
+        return Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
+
     }
 
 }

@@ -24,6 +24,7 @@
             android:id="@+id/imgvQrCode"
             android:layout_width="match_parent"
             android:layout_height="294dp"
+            android:background="#F6ECEC"
             app:srcCompat="@drawable/ic_launcher_background" />
 
         <Button
