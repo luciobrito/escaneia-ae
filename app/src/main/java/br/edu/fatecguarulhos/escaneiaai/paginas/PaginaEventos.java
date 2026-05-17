@@ -7,10 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import br.edu.fatecguarulhos.escaneiaai.R;
+import br.edu.fatecguarulhos.escaneiaai.models.Evento;
+import br.edu.fatecguarulhos.escaneiaai.util.DbManager;
+import br.edu.fatecguarulhos.escaneiaai.util.FirebaseCallback;
+import br.edu.fatecguarulhos.escaneiaai.util.ImpressoraTermica;
 import br.edu.fatecguarulhos.escaneiaai.telas.TelaCriarEvento;
 
 public class PaginaEventos extends Fragment {
@@ -20,7 +25,7 @@ public class PaginaEventos extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private Button btnAdd, btnLer;
+    private Button btnAdd, btnLer, buttonImpressao;
     private TextView textIdDispositivo;
 
     public PaginaEventos(){};
@@ -57,5 +62,33 @@ public class PaginaEventos extends Fragment {
                 startActivity(it);
             }
         });
+<<<<<<< HEAD
+        String idDispositivo = Settings.Secure.getString(v.getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        buttonImpressao = v.findViewById(R.id.button_impressao);
+        /*buttonImpressao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imprimir();
+            }
+        });*/
+        return v;
     }
+
+    public void execBtnAdd(View view){
+        Intent it = new Intent(view.getContext(), FormCriarEvento.class);
+        startActivity(it);
+    }
+    private void imprimir(){
+        try {
+            Evento evento = new Evento("Evento de teste");
+            ImpressoraTermica impressora = new ImpressoraTermica(getActivity(), getContext());
+            impressora.imprimirComPermissao(evento);
+        } catch (Exception e) {
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        }
+
+=======
+    }
+>>>>>>> refs/remotes/origin/main
 }
