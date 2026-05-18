@@ -13,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ import br.edu.fatecguarulhos.escaneiaai.R;
 import br.edu.fatecguarulhos.escaneiaai.dao.EventoDao;
 import br.edu.fatecguarulhos.escaneiaai.interfaces.FirebaseCallback;
 import br.edu.fatecguarulhos.escaneiaai.models.Evento;
+import br.edu.fatecguarulhos.escaneiaai.util.CaptureActivityPortrait;
 import br.edu.fatecguarulhos.escaneiaai.util.QrCodeManager;
 
 public class CameraLeitorCode extends AppCompatActivity {
@@ -37,14 +39,28 @@ public class CameraLeitorCode extends AppCompatActivity {
         openQrCode();
     }
     public void openQrCode(){
-        QrCodeManager.abrirLeitor(new IntentIntegrator(this));
+       //QrCodeManager.abrirLeitor(new IntentIntegrator(this));
+        IntentIntegrator intentIntegrator = new IntentIntegrator(this);
+        intentIntegrator.setOrientationLocked(false);
+        intentIntegrator.setPrompt("Escaneie o QR CODE");
+        intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
+        intentIntegrator.setOrientationLocked(true);
+        intentIntegrator.setBeepEnabled(false);
+        intentIntegrator.setCaptureActivity(CaptureActivityPortrait.class);
+        intentIntegrator.initiateScan();
     }
     // Resultado da leitura do QR code na tela "HomeFragment"
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         // finalizar a tela(garante que a tela em si nunca seja vista)
         finish();
-        String msgQrCode = QrCodeManager.getResultadoLeitor(requestCode, resultCode, data);
+        //String msgQrCode = QrCodeManager.getResultadoLeitor(requestCode, resultCode, data);
+        IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        String msgQrCode = null;
+        if(intentResult != null){
+            String output = intentResult.getContents();
+            msgQrCode = output;
+        }
         if(msgQrCode == null){
             super.onActivityResult(requestCode, resultCode, data);
         } else {
