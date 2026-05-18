@@ -31,5 +31,11 @@
             android:text="Testar impressão"
             android:onClick="imprimir"/>
 
+        <Button
+            android:id="@+id/button_testarFirebase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Testar Firebase" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

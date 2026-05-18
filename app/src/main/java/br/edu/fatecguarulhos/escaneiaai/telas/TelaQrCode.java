@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,9 +17,8 @@ import br.edu.fatecguarulhos.escaneiaai.R;
 import br.edu.fatecguarulhos.escaneiaai.util.QrCodeManager;
 
 public class TelaQrCode extends AppCompatActivity {
-    private TextView txtTitulo, txtTipoQrCode;
     private Button btnQCEntrada, btnQCSaida;
-    private String idEvento, tituloEvento;
+    private String idEvento;
     private ImageView imgQrCode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,18 +38,14 @@ public class TelaQrCode extends AppCompatActivity {
     private void inicializarValores() {
         Intent it =  getIntent();
         idEvento = it.getStringExtra("id");
-        tituloEvento = it.getStringExtra("titulo");
     }
 
     private void inicializarComponentes(){
         imgQrCode = findViewById(R.id.imgvQrCode);
         btnQCEntrada = findViewById(R.id.btnQrCodeEntrada_telaQrCode);
         btnQCSaida = findViewById(R.id.btnQrCodeSaida_telaQrCode);
-        txtTitulo = findViewById(R.id.txtTituloEvento_telaQrCode);
-        txtTipoQrCode = findViewById(R.id.txtTipoQrCode_telaQrCode);
     }
     private void configurarComponentes(){
-        txtTitulo.setText(tituloEvento);
         getQrCodeEntrada();
         btnQCEntrada.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,12 +64,10 @@ public class TelaQrCode extends AppCompatActivity {
     private void getQrCodeSaida(){
         Bitmap qrCode = QrCodeManager.gerarQrCode(idEvento + "/type=saida");
         imgQrCode.setImageBitmap(qrCode);
-        txtTipoQrCode.setText("QrCode Saida");
     }
     private void getQrCodeEntrada(){
         Bitmap qrCode = QrCodeManager.gerarQrCode(idEvento + "/type=entrada");
         imgQrCode.setImageBitmap(qrCode);
-        txtTipoQrCode.setText("QrCode Entrada");
     }
     public void voltar(View view){
         finish();

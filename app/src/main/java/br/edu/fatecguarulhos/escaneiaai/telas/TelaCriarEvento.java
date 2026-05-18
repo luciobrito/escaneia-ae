@@ -99,8 +99,14 @@ public class TelaCriarEvento extends AppCompatActivity {
         return e;
     }
     private void registrarEvento(Evento e){
-        dbConnection.adicionarEvento(e);
-        Toast.makeText(this, "Evento criado com sucesso",Toast.LENGTH_SHORT).show();
+        try {
+            dbConnection.adicionarEvento(e);
+            Toast.makeText(this, "Evento criado com sucesso",Toast.LENGTH_SHORT).show();
+        }
+        catch (Exception exception){
+            Toast.makeText(this, exception.getMessage(),Toast.LENGTH_SHORT).show();
+        }
+
         finish();
     }
 

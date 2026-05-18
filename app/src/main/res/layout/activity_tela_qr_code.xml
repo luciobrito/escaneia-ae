@@ -59,7 +59,15 @@
             android:id="@+id/btnImprimirQrCode_telaQrCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Imprimir" />
+            android:onClick="imprimirQrCodeEntrada"
+            android:text="Imprimir entrada" />
+
+        <Button
+            android:id="@+id/button_qrCodeSaida"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="imprimirQrCodeSaida"
+            android:text="Imprimir Saida" />
 
         <Button
             android:id="@+id/btnVolta_telaQrCode"

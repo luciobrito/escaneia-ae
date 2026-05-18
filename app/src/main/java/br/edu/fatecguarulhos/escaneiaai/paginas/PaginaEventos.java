@@ -26,9 +26,8 @@ public class PaginaEventos extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private Button btnAdd, btnLer, buttonImpressao;
+    private Button btnAdd, btnLer, buttonImpressao, buttonFirebase;
     private TextView textIdDispositivo;
-
     public PaginaEventos(){};
 
     @Override
@@ -56,6 +55,7 @@ public class PaginaEventos extends Fragment {
         btnAdd = v.findViewById(R.id.btnTempAddEvento);
     }
     private void configurarComponentes(View v){
+
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,16 +63,8 @@ public class PaginaEventos extends Fragment {
                 startActivity(it);
             }
         });
-//<<<<<<< HEAD
         String idDispositivo = Settings.Secure.getString(v.getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         buttonImpressao = v.findViewById(R.id.button_impressao);
-        /*buttonImpressao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                imprimir();
-            }
-        });*/
-        //return v;
     }
 
     public void execBtnAdd(View view){
@@ -83,7 +75,7 @@ public class PaginaEventos extends Fragment {
         try {
             Evento evento = new Evento("Evento de teste");
             ImpressoraTermica impressora = new ImpressoraTermica(getActivity(), getContext());
-            impressora.imprimirComPermissao((Imprimivel) evento);
+
         } catch (Exception e) {
             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }

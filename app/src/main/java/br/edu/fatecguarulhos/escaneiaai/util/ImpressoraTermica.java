@@ -41,7 +41,7 @@ public class ImpressoraTermica {
         return impressora;
     }
 
-    private void requisitarPermissaoBluetooth(Imprimivel imprimivel) throws EscPosEncodingException, EscPosBarcodeException, EscPosParserException, EscPosConnectionException {
+    private void requisitarPermissaoBluetooth(String dadosASeremImpressos) throws EscPosEncodingException, EscPosBarcodeException, EscPosParserException, EscPosConnectionException {
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.S && ContextCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
             //Não entendi o terceiro argumento, então simplesmente coloquei um inteiro
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.BLUETOOTH}, 0);
@@ -52,20 +52,17 @@ public class ImpressoraTermica {
         } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S && ContextCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.BLUETOOTH_SCAN}, 3);
         } else {
-            //imprimirComPermissao(imprimivel);
+            imprimirComPermissao(dadosASeremImpressos);
         }
     }
-    public void imprimirComPermissao(Imprimivel imprimivel) {
-
+    private void imprimirComPermissao(String dadosASeremImpressos) {
         try {
-            EscPosPrinter impressora2 = new EscPosPrinter(BluetoothPrintersConnections.selectFirstPaired(), 203, 48f, 32);
-            impressora2.printFormattedText("[C]<b>Teste</b>\n" +
-                    "[L]Impressão\n");
+            impressora.printFormattedText(dadosASeremImpressos);
         } catch (Exception e) {
 
         }
-        }
-    public void imprimir(Imprimivel imprimivel) throws EscPosEncodingException, EscPosBarcodeException, EscPosParserException, EscPosConnectionException {
-        requisitarPermissaoBluetooth(imprimivel);
+    }
+    public void imprimir(String dadosASeremImpressos) throws EscPosEncodingException, EscPosBarcodeException, EscPosParserException, EscPosConnectionException {
+        requisitarPermissaoBluetooth(dadosASeremImpressos);
     }
 }

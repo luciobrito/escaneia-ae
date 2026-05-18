@@ -91,9 +91,6 @@ public class MainActivity extends AppCompatActivity {
             } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S && ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.BLUETOOTH_SCAN}, 4);
             } else {
-
-                ImpressoraTermica i = new ImpressoraTermica(this, this);
-                i.imprimirComPermissao((Imprimivel) new Evento("titulo"));
             }
 
         } catch (Exception e) {

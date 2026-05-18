@@ -2,10 +2,13 @@ package br.edu.fatecguarulhos.escaneiaai.dao;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -23,7 +26,13 @@ public class EventoDao {
         DatabaseReference myRef = database.getReference("eventos");
         String eventoId = myRef.push().getKey();
         e.setId(eventoId);
-        myRef.child(eventoId).setValue(e);
+        myRef.child(eventoId).setValue(e)
+                .addOnSuccessListener(a -> {
+                    //Toast informando sucesso
+                })
+                .addOnFailureListener(ex->{
+                    throw new RuntimeException(ex.getMessage());
+                });
     }
 
 
@@ -74,4 +83,5 @@ public class EventoDao {
             }
         });
     }
+
 }

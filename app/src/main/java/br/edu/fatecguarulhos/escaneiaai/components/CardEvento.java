@@ -6,19 +6,13 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
-
-import com.google.gson.Gson;
-
-import java.time.LocalDateTime;
-
 import br.edu.fatecguarulhos.escaneiaai.models.Evento;
 import br.edu.fatecguarulhos.escaneiaai.R;
 import br.edu.fatecguarulhos.escaneiaai.telas.TelaEvento;
-
+import com.google.gson.Gson;
 public class CardEvento extends ConstraintLayout {
     private String titulo, corpo, jsonEvento;
     private TextView textTitulo, textCorpo;
@@ -33,12 +27,6 @@ public class CardEvento extends ConstraintLayout {
         inicializarComponentes(context);
     }
     private void inicializarComponentes(Context context){
-        LocalDateTime dt1 = LocalDateTime.of(2023, 10, 1, 10, 0);
-        LocalDateTime dt2 = LocalDateTime.now();
-
-        if (dt1.isBefore(dt2)) {
-            System.out.println("dt1 is in the past");
-        }
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.card_evento, this, true);
         CardView card = findViewById(R.id.cardView_evento);
@@ -57,6 +45,7 @@ public class CardEvento extends ConstraintLayout {
         });
     }
     public void alterarConteudo(Evento e){
+
         jsonEvento = new Gson().toJson(e);
         evento = e;
         titulo = e.getTitulo();
