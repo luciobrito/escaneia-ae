@@ -20,12 +20,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/txtTituloEvento_telaQrCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="TextView"
+            android:textSize="24sp" />
+
         <ImageView
             android:id="@+id/imgvQrCode"
             android:layout_width="match_parent"
             android:layout_height="294dp"
             android:background="#F6ECEC"
             app:srcCompat="@drawable/ic_launcher_background" />
+
+        <TextView
+            android:id="@+id/txtTipoQrCode_telaQrCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="TextView"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/btnQrCodeEntrada_telaQrCode"

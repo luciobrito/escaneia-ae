@@ -79,7 +79,9 @@ public class TelaEvento extends AppCompatActivity {
         Intent it  = new Intent(this, TelaQrCode.class);
         // enviar id para uso na criação do qrCode
         String id = evento.getId();
+        String titulo = evento.getTitulo();
         it.putExtra("id", id);
+        it.putExtra("titulo",titulo);
         startActivity(it);
     }
     // appbar
