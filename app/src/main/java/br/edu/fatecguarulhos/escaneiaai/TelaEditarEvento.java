@@ -1,5 +1,7 @@
 package br.edu.fatecguarulhos.escaneiaai;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +19,10 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 import br.edu.fatecguarulhos.escaneiaai.dao.EventoDao;
 import br.edu.fatecguarulhos.escaneiaai.models.Evento;
 
@@ -24,6 +30,8 @@ public class TelaEditarEvento extends AppCompatActivity {
     private EditText edtNome, edtLocal, edtDescricao, edtDataInicio, edtDataFim;
     private Button btnVoltar, btnAlterar, btnExcluir;
     private Evento evento;
+
+    private Calendar calendario = Calendar.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +70,18 @@ public class TelaEditarEvento extends AppCompatActivity {
         edtDescricao.setText(evento.getDescricao());
         edtDataInicio.setText(evento.getDataInicio());
         edtDataFim.setText(evento.getDataFim());
+        edtDataFim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mostrarEscolhaDateTime(edtDataFim);
+            }
+        });
+        edtDataInicio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mostrarEscolhaDateTime(edtDataInicio);
+            }
+        });
         btnAlterar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,14 +131,95 @@ public class TelaEditarEvento extends AppCompatActivity {
             evento.setDescricao(edtDescricao.getText().toString());
             evento.setDataInicio(edtDataInicio.getText().toString());
             evento.setDataFim(edtDataFim.getText().toString());
+            if(evento.getTitulo().isEmpty() || evento.getTitulo().equals("")){
+                Toast.makeText(this, "NOme obrigatório", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if(evento.getLocal().isEmpty() || evento.getLocal().equals("")){
+                Toast.makeText(this, "Local obrigatório", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if(validarDatas(edtDataInicio, edtDataFim)){
+                Toast.makeText(this, "Data inicio/fim inválida!", Toast.LENGTH_SHORT).show();
+                return;
+            }
             EventoDao eventoDAO = new EventoDao();
             eventoDAO.updateEvento(evento);
             Toast.makeText(this, "Evento editado!", Toast.LENGTH_SHORT).show();
 
         } catch (RuntimeException re){
             Toast.makeText(TelaEditarEvento.this, re.getMessage(), Toast.LENGTH_SHORT).show();
+        } catch (Exception e){
+            Toast.makeText(TelaEditarEvento.this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
+
+    private boolean validarDatas(EditText dataInicio1, EditText dataFim1){
+        if(dataFim1.getText().toString().equals("") || dataInicio1.getText().toString().equals(""))
+            return false;
+
+        String strInicio = dataInicio1.getText().toString();
+        String strFim = dataFim1.getText().toString();
+        // os 2 campos tem que estar cheios
+        if(strInicio.equals("") || strFim.equals(""))
+            return false;
+        String[] dataHoraInicio = strInicio.split(" ");
+        String[] dataInicio = dataHoraInicio[0].split("-");
+        String[] horaInicio = dataHoraInicio[1].split(":");
+
+        String[] dataHoraFim = strFim.split(" ");
+        String[] dataFim = dataHoraFim[0].split("-");
+        String[] horaFim = dataHoraFim[1].split(":");
+
+        // ano seguite
+        if(Integer.parseInt(dataFim[0]) > Integer.parseInt(dataInicio[0]))
+            return true;
+        // mesmo ano
+        if(Integer.parseInt(dataFim[0]) == Integer.parseInt(dataInicio[0])){
+            // mes seguinte
+            if(Integer.parseInt(dataFim[1]) > Integer.parseInt(dataInicio[1]))
+                return true;
+            // mesmo mes
+            if(Integer.parseInt(dataFim[1]) == Integer.parseInt(dataInicio[1])) {
+                // dia seguinte
+                if(Integer.parseInt(dataFim[2]) > Integer.parseInt(dataInicio[2]))
+                    return true;
+                // mesmo dia
+                if(Integer.parseInt(dataFim[2]) == Integer.parseInt(dataInicio[2])) {
+                    // hora seguinte
+                    if(Integer.parseInt(horaFim[0]) > Integer.parseInt(horaInicio[0]))
+                        return true;
+                    // mesma hora
+                    if(Integer.parseInt(horaFim[0]) == Integer.parseInt(horaInicio[0])) {
+                        // minuto seguinte
+                        if(Integer.parseInt(horaFim[0]) > Integer.parseInt(horaInicio[0]))
+                            return true;
+                    }
+                }
+            }
+        }
+        return false;
+
+
+    }
+    private void mostrarEscolhaDateTime(EditText edtData){
+        new DatePickerDialog(this, (view, ano, mes, dia) -> {
+            calendario.set(Calendar.YEAR, ano);
+            calendario.set(Calendar.MONTH, mes);
+            calendario.set(Calendar.DAY_OF_MONTH, dia);
+
+            new TimePickerDialog(this, (timeView, hora, minuto) -> {
+                calendario.set(Calendar.HOUR_OF_DAY, hora);
+                calendario.set(Calendar.MINUTE, minuto);
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+                edtData.setText(sdf.format(calendario.getTime()));
+
+            }, calendario.get(Calendar.HOUR_OF_DAY), calendario.get(Calendar.MINUTE), false).show();
+
+        }, calendario.get(Calendar.YEAR), calendario.get(Calendar.MONTH), calendario.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
 
 
 

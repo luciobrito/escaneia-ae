@@ -45,11 +45,7 @@ public class TelaCriarEvento extends AppCompatActivity {
     }
 
     private void inicializarValores() {
-        try{
-            dbConnection = new EventoDao();
-        } catch (RuntimeException re){
-            Toast.makeText(this, re.getMessage(), Toast.LENGTH_SHORT).show();
-        }
+        dbConnection = new EventoDao();
     }
 
     private void inicializarComponentes(){
@@ -65,7 +61,7 @@ public class TelaCriarEvento extends AppCompatActivity {
         btnCriar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validarDatas()){
+                if(validarDatas(edtDataInicio, edtDataFim)){
                     Evento e = criarEvento();
                     registrarEvento(e);
                 }
@@ -94,25 +90,32 @@ public class TelaCriarEvento extends AppCompatActivity {
     }
 
     private Evento criarEvento(){
-        Evento e = new Evento();
-        e.setTitulo(edtNomeEvento.getText().toString());
-        e.setDataInicio(edtDataInicio.getText().toString());
-        e.setDataFim(edtDataFim.getText().toString());
-        e.setIdCriador(getIdCelular());
-        e.setLocal(edtLocal.getText().toString());
-        e.setDescricao(edtDescricao.getText().toString());
-        return e;
+
+            Evento e = new Evento();
+            e.setTitulo(edtNomeEvento.getText().toString());
+            e.setDataInicio(edtDataInicio.getText().toString());
+            e.setDataFim(edtDataFim.getText().toString());
+            e.setIdCriador(getIdCelular());
+            e.setLocal(edtLocal.getText().toString());
+            e.setDescricao(edtDescricao.getText().toString());
+        if(e.getTitulo().isEmpty() || e.getTitulo().equals("")){
+            Toast.makeText(this, "NOme obrigatório", Toast.LENGTH_SHORT).show();
+            return null;
+        }
+        if(e.getLocal().isEmpty() || e.getLocal().equals("")){
+            Toast.makeText(this, "Local obrigatório", Toast.LENGTH_SHORT).show();
+            return null;
+        }
+            return e;
+
+
     }
     private void registrarEvento(Evento e){
-        try {
+        if(e != null){
             dbConnection.adicionarEvento(e);
             Toast.makeText(this, "Evento criado com sucesso",Toast.LENGTH_SHORT).show();
+            finish();
         }
-        catch (Exception exception){
-            Toast.makeText(this, exception.getMessage(),Toast.LENGTH_SHORT).show();
-        }
-
-        finish();
     }
 
     private void mostrarEscolhaDateTime(EditText edtData){
@@ -133,12 +136,12 @@ public class TelaCriarEvento extends AppCompatActivity {
         }, calendario.get(Calendar.YEAR), calendario.get(Calendar.MONTH), calendario.get(Calendar.DAY_OF_MONTH)).show();
     }
 
-    private boolean validarDatas(){
-        if(edtDataFim.getText().toString().equals("") || edtDataInicio.getText().toString().equals(""))
+    private boolean validarDatas(EditText dataInicio1, EditText dataFim1){
+        if(dataFim1.getText().toString().equals("") || dataInicio1.getText().toString().equals(""))
             return false;
 
-        String strInicio = edtDataInicio.getText().toString();
-        String strFim = edtDataFim.getText().toString();
+        String strInicio = dataInicio1.getText().toString();
+        String strFim = dataFim1.getText().toString();
         // os 2 campos tem que estar cheios
         if(strInicio.equals("") || strFim.equals(""))
             return false;
