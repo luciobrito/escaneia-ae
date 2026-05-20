@@ -5,76 +5,131 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
     tools:context=".telas.TelaQrCode">
 
-    <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="729dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="1dp"
-        android:orientation="vertical"
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/txtTituloEvento_telaQrCode"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="TextView"
-            android:textSize="24sp" />
+            android:orientation="vertical"
+            android:padding="24dp">
 
-        <ImageView
-            android:id="@+id/imgvQrCode"
-            android:layout_width="match_parent"
-            android:layout_height="294dp"
-            android:background="#F6ECEC"
-            app:srcCompat="@drawable/ic_launcher_background" />
+            <TextView
+                android:id="@+id/txtTituloEvento_telaQrCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Nome do Evento"
+                android:textColor="#FFFFFF"
+                android:textSize="26sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/txtTipoQrCode_telaQrCode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="TextView"
-            android:textSize="20sp" />
+            <View
+                android:layout_width="60dp"
+                android:layout_height="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="24dp"
+                android:background="#40E0D0" />
 
-        <Button
-            android:id="@+id/btnQrCodeEntrada_telaQrCode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="QrCode Entrada" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="280dp"
+                android:layout_height="280dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
 
-        <Button
-            android:id="@+id/btnQrCodeSaida_telaQrCode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="QrCode Saida" />
+                <ImageView
+                    android:id="@+id/imgvQrCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="16dp"
+                    android:contentDescription="QR Code do Evento"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/ic_launcher_background" />
+            </androidx.cardview.widget.CardView>
 
-        <Button
-            android:id="@+id/btnImprimirQrCode_telaQrCode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="imprimirQrCodeEntrada"
-            android:text="Imprimir entrada" />
+            <TextView
+                android:id="@+id/txtTipoQrCode_telaQrCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:gravity="center_horizontal"
+                android:text="Tipo do QR Code"
+                android:textColor="#888888"
+                android:textSize="16sp" />
 
-        <Button
-            android:id="@+id/button_qrCodeSaida"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="imprimirQrCodeSaida"
-            android:text="Imprimir Saida" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnQrCodeEntrada_telaQrCode"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="8dp"
+                android:text="QR CODE ENTRADA"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:backgroundTint="#9333EA"
+                app:cornerRadius="12dp" />
 
-        <Button
-            android:id="@+id/btnVolta_telaQrCode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="voltar"
-            android:text="voltar" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnQrCodeSaida_telaQrCode"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="8dp"
+                android:text="QR CODE SAÍDA"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:backgroundTint="#9333EA"
+                app:cornerRadius="12dp" />
 
-    </LinearLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnImprimirQrCode_telaQrCode"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="8dp"
+                android:onClick="imprimirQrCodeEntrada"
+                android:text="IMPRIMIR ENTRADA"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:backgroundTint="#9333EA"
+                app:cornerRadius="12dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_qrCodeSaida"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="24dp"
+                android:onClick="imprimirQrCodeSaida"
+                android:text="IMPRIMIR SAÍDA"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:backgroundTint="#9333EA"
+                app:cornerRadius="12dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnVolta_telaQrCode"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:onClick="voltar"
+                android:text="VOLTAR"
+                android:textSize="16sp"
+                android:textColor="#9333EA"
+                android:backgroundTint="@android:color/transparent"
+                app:strokeColor="#9333EA"
+                app:strokeWidth="2dp"
+                app:cornerRadius="12dp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

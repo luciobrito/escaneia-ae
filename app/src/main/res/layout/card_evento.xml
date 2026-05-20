@@ -1,39 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="12dp"
+    android:paddingEnd="12dp"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp">
+
     <com.google.android.material.card.MaterialCardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/cardView_evento"
-        style="?attr/materialCardViewFilledStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        android:background="?attr/selectableItemBackground"
-    >
+        app:cardBackgroundColor="#1E1E1E"
+        app:cardCornerRadius="14dp"
+        app:cardElevation="4dp"
+        app:rippleColor="#339333EA"
+        style="@style/Widget.MaterialComponents.CardView">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="10sp">
+            android:padding="18dp">
 
             <TextView
                 android:id="@+id/textView_tituloCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:tag="titulo_evento"
-                android:text="Titulo do evento"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:text="Título do Evento"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp" />
 
             <TextView
                 android:id="@+id/txtEmAndamento_cardEvento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="Em andamento"
+                android:textColor="#40E0D0"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
 
             <TextView
                 android:id="@+id/textView_corpoCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="20/05/2026 - 22:50"
+                android:textColor="#AAAAAA"
+                android:textSize="14sp" />
+
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
+</FrameLayout>
