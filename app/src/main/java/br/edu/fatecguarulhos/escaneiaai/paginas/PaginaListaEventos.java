@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import br.edu.fatecguarulhos.escaneiaai.MainActivity;
@@ -123,10 +124,11 @@ public class PaginaListaEventos extends Fragment {
     }
 
     public void atualizarListaEventos(List<Evento> lista){
+        lista.sort(Comparator.comparingInt(Evento::pegarDataAsInt));
         ll.removeAllViewsInLayout();
-        for(int i = 0; i < lista.size(); i++){
+        for(int i = lista.size(); i >= 0 ; i--){
             CardEvento card = new CardEvento((getContext()));
-            card.alterarConteudo(lista.get(i));
+            card.alterarConteudo(lista.get(i-1));
             ll.addView(card);
         }
     }
