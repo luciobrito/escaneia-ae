@@ -143,13 +143,13 @@ public class TelaEvento extends AppCompatActivity {
             @Override
             public void onCallBackByid(Evento e) {
                 evento = e;
-                if(evento == null){
-                    Toast.makeText(TelaEvento.this,"Evento Excluido", Toast.LENGTH_SHORT).show();
-                    finish();
-                } else {
+                if(evento != null){
                     inicializarComponentes();
                     configurarComponentes();
                     gerarListaCardParticipantes();
+                } else {
+                    Toast.makeText(TelaEvento.this,"Evento não encontrado", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
         });

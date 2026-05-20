@@ -91,7 +91,10 @@ public class TelaEditarEvento extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         EventoDao eventoDAO = new EventoDao();
                         eventoDAO.deleteEvento(evento.getId());
-                        //Toast.makeText(TelaEditarEvento.this, "Evento excluido!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TelaEditarEvento.this, "Evento excluido!", Toast.LENGTH_SHORT).show();
+                        Intent it = new Intent();
+                        it.putExtra("excluido", true);
+                        setResult(AppCompatActivity.RESULT_OK, it);
                         finish();
                     }})
                 .setNegativeButton(android.R.string.no, null).show();
