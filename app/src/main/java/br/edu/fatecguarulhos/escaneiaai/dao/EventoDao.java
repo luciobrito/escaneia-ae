@@ -83,5 +83,10 @@ public class EventoDao {
             }
         });
     }
+    public void updateEvento(Evento evento){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("eventos").child(evento.getId());;
+        ref.setValue(evento);
+    }
+
 
 }

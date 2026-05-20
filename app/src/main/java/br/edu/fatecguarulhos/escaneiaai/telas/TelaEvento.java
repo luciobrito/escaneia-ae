@@ -69,10 +69,10 @@ public class TelaEvento extends AppCompatActivity {
         txtDataEvento.setText("Inicio: " + evento.getDataInicio() + "\nFim: " + evento.getDataFim());
         txtLocalEvento.setText("Local: " + evento.getLocal());
 
-        if(evento.getDescricao() == null)
-            txtDescricaoEvento.setText("Descrição: Sem descricao");
-        else
+        if(evento.getDescricao() != null && !(evento.getDescricao().equals("")))
             txtDescricaoEvento.setText("Descrição: " + evento.getDescricao());
+        else
+            txtDescricaoEvento.setText("Descrição: Sem descricao");
         fabQrCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

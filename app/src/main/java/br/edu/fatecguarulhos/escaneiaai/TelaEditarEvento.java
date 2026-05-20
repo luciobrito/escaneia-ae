@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.gson.Gson;
 
+import br.edu.fatecguarulhos.escaneiaai.dao.EventoDao;
 import br.edu.fatecguarulhos.escaneiaai.models.Evento;
 
 public class TelaEditarEvento extends AppCompatActivity {
@@ -81,7 +83,14 @@ public class TelaEditarEvento extends AppCompatActivity {
 
     }
     public void editarEvento(){
-
+        evento.setTitulo(edtNome.getText().toString());
+        evento.setLocal(edtLocal.getText().toString());
+        evento.setDescricao(edtDescricao.getText().toString());
+        evento.setDataInicio(edtDataInicio.getText().toString());
+        evento.setDataFim(edtDataFim.getText().toString());
+        EventoDao eventoDAO = new EventoDao();
+        eventoDAO.updateEvento(evento);
+        Toast.makeText(this, "Evento editado!", Toast.LENGTH_SHORT).show();
     }
 
 
