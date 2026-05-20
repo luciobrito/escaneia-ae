@@ -61,12 +61,9 @@ public class TelaCriarEvento extends AppCompatActivity {
         btnCriar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validarDatas(edtDataInicio, edtDataFim)){
                     Evento e = criarEvento();
                     registrarEvento(e);
-                }
-                else
-                    Toast.makeText(v.getContext(), "Data inicio/fim inválida", Toast.LENGTH_SHORT).show();
+
             }
         });
         btnVoltar.setOnClickListener(new View.OnClickListener() {
@@ -102,11 +99,15 @@ public class TelaCriarEvento extends AppCompatActivity {
             Toast.makeText(this, "NOme obrigatório", Toast.LENGTH_SHORT).show();
             return null;
         }
+        if(!validarDatas(edtDataInicio, edtDataFim)){
+            Toast.makeText(this, "Data inicio/fim inválida", Toast.LENGTH_SHORT).show();
+            return null;
+        }
         if(e.getLocal().isEmpty() || e.getLocal().equals("")){
             Toast.makeText(this, "Local obrigatório", Toast.LENGTH_SHORT).show();
             return null;
         }
-            return e;
+        return e;
 
 
     }
@@ -128,7 +129,7 @@ public class TelaCriarEvento extends AppCompatActivity {
                 calendario.set(Calendar.HOUR_OF_DAY, hora);
                 calendario.set(Calendar.MINUTE, minuto);
 
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY - HH:mm", Locale.getDefault());
                 edtData.setText(sdf.format(calendario.getTime()));
 
             }, calendario.get(Calendar.HOUR_OF_DAY), calendario.get(Calendar.MINUTE), false).show();
@@ -145,12 +146,12 @@ public class TelaCriarEvento extends AppCompatActivity {
         // os 2 campos tem que estar cheios
         if(strInicio.equals("") || strFim.equals(""))
             return false;
-        String[] dataHoraInicio = strInicio.split(" ");
-        String[] dataInicio = dataHoraInicio[0].split("-");
+        String[] dataHoraInicio = strInicio.split(" - ");
+        String[] dataInicio = dataHoraInicio[0].split("/");
         String[] horaInicio = dataHoraInicio[1].split(":");
 
-        String[] dataHoraFim = strFim.split(" ");
-        String[] dataFim = dataHoraFim[0].split("-");
+        String[] dataHoraFim = strFim.split(" - ");
+        String[] dataFim = dataHoraFim[0].split("/");
         String[] horaFim = dataHoraFim[1].split(":");
 
         // ano seguite

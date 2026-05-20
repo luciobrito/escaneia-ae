@@ -163,29 +163,29 @@ public class TelaEditarEvento extends AppCompatActivity {
         // os 2 campos tem que estar cheios
         if(strInicio.equals("") || strFim.equals(""))
             return false;
-        String[] dataHoraInicio = strInicio.split(" ");
-        String[] dataInicio = dataHoraInicio[0].split("-");
+        String[] dataHoraInicio = strInicio.split(" - ");
+        String[] dataInicio = dataHoraInicio[0].split("/");
         String[] horaInicio = dataHoraInicio[1].split(":");
 
-        String[] dataHoraFim = strFim.split(" ");
-        String[] dataFim = dataHoraFim[0].split("-");
+        String[] dataHoraFim = strFim.split(" - ");
+        String[] dataFim = dataHoraFim[0].split("/");
         String[] horaFim = dataHoraFim[1].split(":");
 
         // ano seguite
-        if(Integer.parseInt(dataFim[0]) > Integer.parseInt(dataInicio[0]))
+        if(Integer.parseInt(dataFim[2]) > Integer.parseInt(dataInicio[0]))
             return true;
         // mesmo ano
-        if(Integer.parseInt(dataFim[0]) == Integer.parseInt(dataInicio[0])){
+        if(Integer.parseInt(dataFim[2]) == Integer.parseInt(dataInicio[0])){
             // mes seguinte
             if(Integer.parseInt(dataFim[1]) > Integer.parseInt(dataInicio[1]))
                 return true;
             // mesmo mes
             if(Integer.parseInt(dataFim[1]) == Integer.parseInt(dataInicio[1])) {
                 // dia seguinte
-                if(Integer.parseInt(dataFim[2]) > Integer.parseInt(dataInicio[2]))
+                if(Integer.parseInt(dataFim[1]) > Integer.parseInt(dataInicio[2]))
                     return true;
                 // mesmo dia
-                if(Integer.parseInt(dataFim[2]) == Integer.parseInt(dataInicio[2])) {
+                if(Integer.parseInt(dataFim[1]) == Integer.parseInt(dataInicio[2])) {
                     // hora seguinte
                     if(Integer.parseInt(horaFim[0]) > Integer.parseInt(horaInicio[0]))
                         return true;
@@ -212,7 +212,7 @@ public class TelaEditarEvento extends AppCompatActivity {
                 calendario.set(Calendar.HOUR_OF_DAY, hora);
                 calendario.set(Calendar.MINUTE, minuto);
 
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy - HH:mm", Locale.getDefault());
                 edtData.setText(sdf.format(calendario.getTime()));
 
             }, calendario.get(Calendar.HOUR_OF_DAY), calendario.get(Calendar.MINUTE), false).show();
