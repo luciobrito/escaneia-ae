@@ -27,7 +27,7 @@ import br.edu.fatecguarulhos.escaneiaai.models.Evento;
 import br.edu.fatecguarulhos.escaneiaai.models.Participante;
 
 public class TelaEvento extends AppCompatActivity {
-    private TextView txtTituloEvento;
+    private TextView txtTituloEvento, txtLocalEvento, txtDataEvento, txtDescricaoEvento;
     private FloatingActionButton fabQrCode;
     private Evento evento;
     private RecyclerView rvParticipantes;
@@ -56,11 +56,17 @@ public class TelaEvento extends AppCompatActivity {
 
     private void inicializarComponentes(){
         txtTituloEvento = findViewById(R.id.txtTituloEvento_actv_tela_evento);
+        txtDataEvento = findViewById(R.id.txtHorarioEvento_telaEvento);
+        txtLocalEvento = findViewById(R.id.txtLocalEvento_telaEvento);
+        txtDescricaoEvento = findViewById(R.id.txtDescricaoEvento_telaEvento);
         fabQrCode = findViewById(R.id.fabQrCode_telaEvento);
         rvParticipantes = findViewById(R.id.rvPresentes);
     }
     private void configurarComponentes(){
         txtTituloEvento.setText(evento.getTitulo());
+        txtDataEvento.setText("Inicio: " + evento.getDataInicio() + "\nFim: " + evento.getDataFim());
+        txtLocalEvento.setText("Local: " + evento.getLocal());
+        txtDescricaoEvento.setText("Descrição: " + evento.getDescricao());
         fabQrCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
