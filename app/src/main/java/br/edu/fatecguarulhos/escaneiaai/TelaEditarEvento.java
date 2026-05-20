@@ -127,26 +127,16 @@ public class TelaEditarEvento extends AppCompatActivity {
     }
     public void editarEvento(){
         try{
-            evento.setTitulo(edtNome.getText().toString());
-            evento.setLocal(edtLocal.getText().toString());
-            evento.setDescricao(edtDescricao.getText().toString());
-            evento.setDataInicio(edtDataInicio.getText().toString());
-            evento.setDataFim(edtDataFim.getText().toString());
-            if(evento.getTitulo().isEmpty() || evento.getTitulo().equals("")){
-                Toast.makeText(this, "NOme obrigatório", Toast.LENGTH_SHORT).show();
-                return;
+            if(validarDados()){
+                evento.setTitulo(edtNome.getText().toString());
+                evento.setLocal(edtLocal.getText().toString());
+                evento.setDescricao(edtDescricao.getText().toString());
+                evento.setDataInicio(edtDataInicio.getText().toString());
+                evento.setDataFim(edtDataFim.getText().toString());
+                EventoDao eventoDAO = new EventoDao();
+                eventoDAO.updateEvento(evento);
+                Toast.makeText(this, "Evento editado!", Toast.LENGTH_SHORT).show();
             }
-            if(evento.getLocal().isEmpty() || evento.getLocal().equals("")){
-                Toast.makeText(this, "Local obrigatório", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if(!validarDatas(edtDataInicio, edtDataFim)){
-                Toast.makeText(this, "Data inicio/fim inválida!", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            EventoDao eventoDAO = new EventoDao();
-            eventoDAO.updateEvento(evento);
-            Toast.makeText(this, "Evento editado!", Toast.LENGTH_SHORT).show();
 
         } catch (RuntimeException re){
             Toast.makeText(TelaEditarEvento.this, re.getMessage(), Toast.LENGTH_SHORT).show();
@@ -154,7 +144,23 @@ public class TelaEditarEvento extends AppCompatActivity {
             Toast.makeText(TelaEditarEvento.this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
+    private boolean validarDados(){
+        if(!validarTitulo(edtNome)){
+            Toast.makeText(this, "NOme obrigatório", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(!validarDatas(edtDataInicio, edtDataFim)){
+            Toast.makeText(this, "Data inicio/fim inválida", Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
+        if(!validarLocal(edtLocal)){
+            Toast.makeText(this, "Local obrigatório", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+
+    }
     private boolean validarDatas(EditText dataInicio1, EditText dataFim1){
         if(dataFim1.getText().toString().equals("") || dataInicio1.getText().toString().equals(""))
             return false;
@@ -165,6 +171,18 @@ public class TelaEditarEvento extends AppCompatActivity {
         if(d1.equals(d2))
             return true;
         return(d1.before(d2));
+    }
+    private boolean validarTitulo(EditText campoNome){
+        if(campoNome.getText().toString().isEmpty() || campoNome.getText().equals("")){
+            return false;
+        }
+        return true;
+    }
+    private boolean validarLocal(EditText campoLocal){
+        if(campoLocal.getText().toString().isEmpty() || campoLocal.getText().equals("")){
+            return false;
+        }
+        return true;
     }
     private void mostrarEscolhaDateTime(EditText edtData){
         new DatePickerDialog(this, (view, ano, mes, dia) -> {

@@ -62,9 +62,10 @@ public class TelaCriarEvento extends AppCompatActivity {
         btnCriar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(validarDados()){
                     Evento e = criarEvento();
                     registrarEvento(e);
-
+                }
             }
         });
         btnVoltar.setOnClickListener(new View.OnClickListener() {
@@ -96,18 +97,8 @@ public class TelaCriarEvento extends AppCompatActivity {
             e.setIdCriador(getIdCelular());
             e.setLocal(edtLocal.getText().toString());
             e.setDescricao(edtDescricao.getText().toString());
-        if(e.getTitulo().isEmpty() || e.getTitulo().equals("")){
-            Toast.makeText(this, "NOme obrigatório", Toast.LENGTH_SHORT).show();
-            return null;
-        }
-        if(!validarDatas(edtDataInicio, edtDataFim)){
-            Toast.makeText(this, "Data inicio/fim inválida", Toast.LENGTH_SHORT).show();
-            return null;
-        }
-        if(e.getLocal().isEmpty() || e.getLocal().equals("")){
-            Toast.makeText(this, "Local obrigatório", Toast.LENGTH_SHORT).show();
-            return null;
-        }
+
+
         return e;
 
 
@@ -119,7 +110,23 @@ public class TelaCriarEvento extends AppCompatActivity {
             finish();
         }
     }
+    private boolean validarDados(){
+        if(!validarTitulo(edtNomeEvento)){
+            Toast.makeText(this, "NOme obrigatório", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(!validarDatas(edtDataInicio, edtDataFim)){
+            Toast.makeText(this, "Data inicio/fim inválida", Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
+        if(!validarLocal(edtLocal)){
+            Toast.makeText(this, "Local obrigatório", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+
+    }
     private void mostrarEscolhaDateTime(EditText edtData){
         new DatePickerDialog(this, (view, ano, mes, dia) -> {
             calendario.set(Calendar.YEAR, ano);
@@ -148,6 +155,18 @@ public class TelaCriarEvento extends AppCompatActivity {
         if(d1.equals(d2))
             return true;
         return(d1.before(d2));
+    }
+    private boolean validarTitulo(EditText campoNome){
+        if(campoNome.getText().toString().isEmpty() || campoNome.getText().equals("")){
+            return false;
+        }
+        return true;
+    }
+    private boolean validarLocal(EditText campoLocal){
+        if(campoLocal.getText().toString().isEmpty() || campoLocal.getText().equals("")){
+            return false;
+        }
+        return true;
     }
     // para definir o criador do evento
     private String getIdCelular(){
