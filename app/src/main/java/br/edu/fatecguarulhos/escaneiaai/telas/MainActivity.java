@@ -18,6 +18,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.fatecguarulhos.escaneiaai.R;
@@ -56,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void inicializarValores(){
-        //bottomNavigationView = findViewById(R.id.bottom_navigation);
         try{
             ll = findViewById(R.id.layout_dados_main);
             dbConnection = new EventoDao();
@@ -96,10 +96,18 @@ public class MainActivity extends AppCompatActivity {
 
     public void atualizarListaEventos(List<Evento> lista){
         ll.removeAllViewsInLayout();
-        for(Evento e : lista){
+        List<CardEvento> eventosEncerrados = new ArrayList<>();
+        for(Evento e : lista) {
             CardEvento card = new CardEvento(this);
             card.alterarConteudo(e);
-            ll.addView(card);
+
+            if (card.getAndamento() == 2)
+                eventosEncerrados.add(card);
+            else
+                ll.addView(card);
+        }
+        for(CardEvento ce : eventosEncerrados){
+            ll.addView(ce);
         }
     }
     @Override

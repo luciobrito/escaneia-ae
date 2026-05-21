@@ -21,9 +21,10 @@ import java.util.Date;
 import java.util.Locale;
 
 public class CardEvento extends ConstraintLayout {
-    private String titulo, corpo, jsonEvento, andamento;
+    private String titulo, corpo, jsonEvento;
     private TextView txtAndamento;
     private Evento evento;
+    private int andamento;
     private CardView cardView;
     public CardEvento(Context context){
         super(context);
@@ -65,19 +66,17 @@ public class CardEvento extends ConstraintLayout {
     }
     public void alterarAndamentoEvento(){
         int momenotInt = momentoEvento();
+        andamento = momenotInt;
         if(momenotInt == 0){
             txtAndamento.setText("Em breve");
-            andamento = "em_breve";
             txtAndamento.setTextColor(Color.parseColor("#40E0D0"));
         }
         else if(momenotInt == 1){
             txtAndamento.setText("Em andamento!");
-            andamento = "em_andamento";
             txtAndamento.setTextColor(Color.parseColor("#E4B32E"));
         }
         else if(momenotInt == 2){
             txtAndamento.setText("Encerrado");
-            andamento = "encerrado";
             txtAndamento.setTextColor(Color.parseColor("#EF3232"));
         }
         else {
@@ -108,6 +107,9 @@ public class CardEvento extends ConstraintLayout {
             e.printStackTrace();
             return null;
         }
+    }
+    public int getAndamento(){
+        return andamento;
     }
 
 }
