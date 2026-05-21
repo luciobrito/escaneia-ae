@@ -100,6 +100,7 @@ public class PaginaListaEventos extends Fragment {
         dbConnection.getAllEventos(new FirebaseCallback() {
             @Override
             public void onCallbackForAll(List<Evento> lista) {
+
                 atualizarListaEventos(lista);
             }
 

@@ -61,7 +61,7 @@ public class EventoDao {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("eventos");
 
 
-        ref.addValueEventListener(new ValueEventListener() {
+        ref.orderByChild(ref.getKey() + "dataInicio").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<Evento> listaEventos = new ArrayList<Evento>();
