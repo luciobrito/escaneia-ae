@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.fatecguarulhos.escaneiaai.R;
-import br.edu.fatecguarulhos.escaneiaai.TelaEditarEvento;
 import br.edu.fatecguarulhos.escaneiaai.adapter.ParticipanteAdapter;
 import br.edu.fatecguarulhos.escaneiaai.dao.EventoDao;
 import br.edu.fatecguarulhos.escaneiaai.interfaces.FirebaseCallback;
@@ -123,7 +122,7 @@ public class TelaEvento extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.appbar_exibir_evento, menu);
+        inflater.inflate(R.menu.appbar_voltar, menu);
         return true;
     }
 

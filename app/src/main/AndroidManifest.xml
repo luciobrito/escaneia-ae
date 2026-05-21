@@ -29,7 +29,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents">
         <activity
-            android:name=".TelaEditarEvento"
+            android:name=".telas.TelaEditarEvento"
             android:exported="false" />
         <activity
             android:name=".telas.CameraLeitorCode"
@@ -47,7 +47,7 @@
             android:name=".telas.TelaEvento"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".telas.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

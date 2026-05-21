@@ -54,7 +54,7 @@ public class ParticipanteAdapter extends RecyclerView.Adapter<ParticipanteAdapte
         void setDetails(Participante participante){
             txtNome.setText(participante.getNome());
             txtEmail.setText("Email: " + participante.getEmail());
-            txtRa.setText("RA: " + participante.getEmail());
+            txtRa.setText("RA: " + participante.getRa());
             txtEntrada.setText((participante.isSaida() ? "Saida Registrada" : "Presente"));
         }
     }

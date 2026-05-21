@@ -1,4 +1,4 @@
-package br.edu.fatecguarulhos.escaneiaai;
+package br.edu.fatecguarulhos.escaneiaai.telas;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -24,6 +24,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import br.edu.fatecguarulhos.escaneiaai.R;
 import br.edu.fatecguarulhos.escaneiaai.dao.EventoDao;
 import br.edu.fatecguarulhos.escaneiaai.models.Evento;
 
@@ -127,9 +128,9 @@ public class TelaEditarEvento extends AppCompatActivity {
     public void editarEvento(){
         try{
             if(validarDados()){
-                evento.setTitulo(edtNome.getText().toString());
-                evento.setLocal(edtLocal.getText().toString());
-                evento.setDescricao(edtDescricao.getText().toString());
+                evento.setTitulo(edtNome.getText().toString().trim());
+                evento.setLocal(edtLocal.getText().toString().trim());
+                evento.setDescricao(edtDescricao.getText().toString().trim());
                 evento.setDataInicio(edtDataInicio.getText().toString());
                 evento.setDataFim(edtDataFim.getText().toString());
                 EventoDao eventoDAO = new EventoDao();
@@ -172,16 +173,12 @@ public class TelaEditarEvento extends AppCompatActivity {
         return(d1.before(d2));
     }
     private boolean validarTitulo(EditText campoNome){
-        if(campoNome.getText().toString().isEmpty() || campoNome.getText().equals("")){
-            return false;
-        }
-        return true;
+        String input = campoNome.getText().toString().trim();
+        return !input.isEmpty();
     }
     private boolean validarLocal(EditText campoLocal){
-        if(campoLocal.getText().toString().isEmpty() || campoLocal.getText().equals("")){
-            return false;
-        }
-        return true;
+        String input = campoLocal.getText().toString().trim();
+        return !input.isEmpty();
     }
     private void mostrarEscolhaDateTime(EditText edtData){
         new DatePickerDialog(this, (view, ano, mes, dia) -> {

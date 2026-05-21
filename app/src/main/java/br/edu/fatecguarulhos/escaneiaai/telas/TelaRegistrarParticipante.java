@@ -1,5 +1,6 @@
 package br.edu.fatecguarulhos.escaneiaai.telas;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -18,10 +20,11 @@ import java.util.NoSuchElementException;
 import br.edu.fatecguarulhos.escaneiaai.R;
 import br.edu.fatecguarulhos.escaneiaai.dao.ParticipanteDao;
 import br.edu.fatecguarulhos.escaneiaai.models.Participante;
+import br.edu.fatecguarulhos.escaneiaai.util.CacheHelper;
 
 public class TelaRegistrarParticipante extends AppCompatActivity {
     private boolean isEntrada;
-    private String eventoJson;
+    private String eventoJson, inputNome, inputEmail, inputRa;
     private EditText edtNome, edtEmail, edtRa;
     private Button btnRegistrar;
     @Override
@@ -50,23 +53,25 @@ public class TelaRegistrarParticipante extends AppCompatActivity {
         btnRegistrar = findViewById(R.id.btnRegistrar_FormRegistrarParticipante);
     }
     private void configurarComponentes(){
+        pegarDadosCace();
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Participante p = criarParticipante();
-                registrarParticipante(p);
+                if(validarCampos()){
+                    Participante p = criarParticipante();
+                    registrarParticipante(p);
+                }
             }
         });
     }
     private Participante criarParticipante(){
         Participante p = new Participante();
-        String nome, email, ra;
-        nome = edtNome.getText().toString();
-        email = edtEmail.getText().toString();
-        ra = edtRa.getText().toString();
-        p.setNome(nome);
-        p.setEmail(email);
-        p.setRa(ra);
+        inputNome = edtNome.getText().toString().trim();
+        inputEmail = edtEmail.getText().toString().trim();
+        inputRa = edtRa.getText().toString().trim();
+        p.setNome(inputNome);
+        p.setEmail(inputEmail);
+        p.setRa(inputRa);
         return p;
     }
     private void registrarParticipante(Participante p){
@@ -75,7 +80,10 @@ public class TelaRegistrarParticipante extends AppCompatActivity {
                 registrarEntrada(p);
             else
                 registrarSaida(p);
-            finish();
+            if(dadosJaSalvosCache())
+                finish();
+            else
+                confirmarSalvarDadosCache();
         } catch (IllegalArgumentException iae){
             Toast.makeText(this, iae.getMessage(), Toast.LENGTH_SHORT).show();
         } catch (NoSuchElementException nsee){
@@ -94,6 +102,102 @@ public class TelaRegistrarParticipante extends AppCompatActivity {
         dbConnection.registrarSaidaParticipante(eventoJson, p);
         Toast.makeText(this, "Saida confirmada!", Toast.LENGTH_SHORT).show();
     }
+    private boolean validarCampos(){
+        if(!validarCampoNome()) {
+            Toast.makeText(this, "Insira um nome válido", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(!validarCampoEmail()) {
+            Toast.makeText(this, "Insira um email válido", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(!validarCampoRa()) {
+            Toast.makeText(this, "Insira um RA válido", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+    private boolean validarCampoNome(){
+        String input = edtNome.getText().toString();
+        return !(input.trim().isEmpty());
+    }
+    private boolean validarCampoEmail(){
+        String input = edtEmail.getText().toString();
+        return !(input.isEmpty());
+    }
+    private boolean validarCampoRa(){
+        String input = edtRa.getText().toString();
+        return !(input.isEmpty());
+    }
+    public void pegarDadosCace(){
+        String[] dadosCache = CacheHelper.getFromCache(this);
+        for(String s : dadosCache){
+            if(s.equals("") || s.isEmpty())
+                return;
+        }
+        mostrarDadosCache(dadosCache);
+    }
+    public boolean dadosJaSalvosCache(){
+        // verificar se dados inseridos ja estão salvos em cache
+        String[] dadosCache = CacheHelper.getFromCache(this);
+        if(dadosCache[0].equals(inputNome) && dadosCache[1].equals(inputEmail) && dadosCache[2].equals(inputRa))
+            return true;
+        return false;
+    }
+    private void mostrarDadosCache(String[] dadosCache){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Usar ultimos dados salvos?");
+        builder.setMessage(
+                "Nome: " + dadosCache[0] +
+                        "\nEmail: " + dadosCache[1] +
+                        "\nRA: " + dadosCache[2]
+        );
+        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                edtNome.setText(dadosCache[0]);
+                edtEmail.setText(dadosCache[1]);
+                edtRa.setText(dadosCache[2]);
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void confirmarSalvarDadosCache(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Salvar informações?");
+        builder.setMessage(
+                "\nNome: " + inputNome +
+                        "\nEmail: " + inputEmail +
+                        "\nRA: " + inputRa
+        );
+        builder.setPositiveButton("Salvar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                CacheHelper.saveToCache(TelaRegistrarParticipante.this, inputNome, inputEmail, inputRa);
+                dialog.dismiss();
+                finish();
+            }
+        });
+        builder.setNegativeButton("Não salvar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                finish();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
 
 
 }

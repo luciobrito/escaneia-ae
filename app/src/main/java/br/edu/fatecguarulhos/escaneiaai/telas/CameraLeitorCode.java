@@ -18,12 +18,10 @@ import com.google.zxing.integration.android.IntentResult;
 import java.util.List;
 
 import br.edu.fatecguarulhos.escaneiaai.R;
-import br.edu.fatecguarulhos.escaneiaai.TelaEditarEvento;
 import br.edu.fatecguarulhos.escaneiaai.dao.EventoDao;
 import br.edu.fatecguarulhos.escaneiaai.interfaces.FirebaseCallback;
 import br.edu.fatecguarulhos.escaneiaai.models.Evento;
 import br.edu.fatecguarulhos.escaneiaai.util.CaptureActivityPortrait;
-import br.edu.fatecguarulhos.escaneiaai.util.QrCodeManager;
 
 public class CameraLeitorCode extends AppCompatActivity {
 

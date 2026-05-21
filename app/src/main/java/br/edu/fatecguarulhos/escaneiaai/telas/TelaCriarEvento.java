@@ -23,7 +23,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import br.edu.fatecguarulhos.escaneiaai.R;
-import br.edu.fatecguarulhos.escaneiaai.TelaEditarEvento;
 import br.edu.fatecguarulhos.escaneiaai.dao.EventoDao;
 import br.edu.fatecguarulhos.escaneiaai.models.Evento;
 
@@ -93,14 +92,14 @@ public class TelaCriarEvento extends AppCompatActivity {
     private Evento criarEvento(){
 
             Evento e = new Evento();
-            e.setTitulo(edtNomeEvento.getText().toString());
+            e.setTitulo(edtNomeEvento.getText().toString().trim());
             e.setDataInicio(edtDataInicio.getText().toString());
             e.setDataFim(edtDataFim.getText().toString());
             String idHash = String.valueOf(getIdCelular().hashCode());
             e.setIdCriador(getIdCelular());
-            e.setSenha(idHash.substring(0,4));
-            e.setLocal(edtLocal.getText().toString());
-            e.setDescricao(edtDescricao.getText().toString());
+            e.setSenha(idHash.substring(2,6));
+            e.setLocal(edtLocal.getText().toString().trim());
+            e.setDescricao(edtDescricao.getText().toString().trim());
 
 
         return e;
@@ -117,7 +116,7 @@ public class TelaCriarEvento extends AppCompatActivity {
     }
     private boolean validarDados(){
         if(!validarTitulo(edtNomeEvento)){
-            Toast.makeText(this, "NOme obrigatório", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Nome obrigatório", Toast.LENGTH_SHORT).show();
             return false;
         }
         if(!validarDatas(edtDataInicio, edtDataFim)){
@@ -136,18 +135,14 @@ public class TelaCriarEvento extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Senha: " + senha);
         builder.setMessage("Use esta senha para alterar seus eventos a partir de outro dispositivo.");
-
-// Set the Positive (Yes/OK) button
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // Code to execute when OK is clicked
                 dialog.dismiss();
             }
         });
         AlertDialog dialog = builder.create();
         dialog.show();
-
     }
     private void mostrarEscolhaDateTime(EditText edtData){
         new DatePickerDialog(this, (view, ano, mes, dia) -> {
@@ -179,16 +174,12 @@ public class TelaCriarEvento extends AppCompatActivity {
         return(d1.before(d2));
     }
     private boolean validarTitulo(EditText campoNome){
-        if(campoNome.getText().toString().isEmpty() || campoNome.getText().equals("")){
-            return false;
-        }
-        return true;
+        String input = campoNome.getText().toString().trim();
+        return !input.isEmpty();
     }
     private boolean validarLocal(EditText campoLocal){
-        if(campoLocal.getText().toString().isEmpty() || campoLocal.getText().equals("")){
-            return false;
-        }
-        return true;
+        String input = campoLocal.getText().toString().trim();
+        return !input.isEmpty();
     }
     // para definir o criador do evento
     private String getIdCelular(){
