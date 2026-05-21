@@ -1,5 +1,6 @@
 package br.edu.fatecguarulhos.escaneiaai.telas;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -51,7 +53,7 @@ public class TelaRegistrarParticipante extends AppCompatActivity {
         btnRegistrar = findViewById(R.id.btnRegistrar_FormRegistrarParticipante);
     }
     private void configurarComponentes(){
-        carregarCache();
+        pegarDadosCace();
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,11 +101,39 @@ public class TelaRegistrarParticipante extends AppCompatActivity {
     public void salvarCache(){
         CacheHelper.saveToCache(this, inputNome, inputEmail, inputRa);
     }
-    public void carregarCache(){
+    public void pegarDadosCace(){
         String[] dadosCache = CacheHelper.getFromCache(this);
-        edtNome.setText(dadosCache[0]);
-        edtEmail.setText(dadosCache[1]);
-        edtRa.setText(dadosCache[2]);
+        for(String s : dadosCache){
+            if(s.equals("") || s.isEmpty())
+                return;
+        }
+        mostrarDadosCache(dadosCache);
+    }
+    private void mostrarDadosCache(String[] dadosCache){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Usar ultimos dados salvos?");
+        builder.setMessage(
+                "Nome: " + dadosCache[0] +
+                        "\nEmail: " + dadosCache[1] +
+                        "\nRA: " + dadosCache[2]
+        );
+        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                edtNome.setText(dadosCache[0]);
+                edtEmail.setText(dadosCache[1]);
+                edtRa.setText(dadosCache[2]);
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 
