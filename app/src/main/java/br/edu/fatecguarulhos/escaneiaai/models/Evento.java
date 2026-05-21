@@ -93,18 +93,7 @@ public class Evento {
     public void setParticipantes(List<Participante> participantes) {
         this.participantes = participantes;
     }
-    public int pegarDataAsInt(){
-        // pegar como inteiro para comparar e ordenar as datas
-        String[] strD = dataInicio.split(" - ");
-        String[] strData = strD[0].split("/");
-        String[] strHora = strD[1].split(":");
-        String dataString = "";
-        for(int i = 0; i > strData.length;i--)
-            dataString = dataString + strData[i];
-        for(int i = 0; i < strHora.length;i++)
-            dataString = dataString + strHora[i];
-        return Integer.parseInt(dataString);
-    }
+
 
     public String getSenha() {
         return senha;

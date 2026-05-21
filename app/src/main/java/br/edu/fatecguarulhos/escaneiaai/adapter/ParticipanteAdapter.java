@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import br.edu.fatecguarulhos.escaneiaai.R;
-import br.edu.fatecguarulhos.escaneiaai.components.CardParticipante;
 import br.edu.fatecguarulhos.escaneiaai.models.Participante;
 
 public class ParticipanteAdapter extends RecyclerView.Adapter<ParticipanteAdapter.ParticipanteHolder> {
@@ -44,13 +43,19 @@ public class ParticipanteAdapter extends RecyclerView.Adapter<ParticipanteAdapte
     }
 
     class ParticipanteHolder extends RecyclerView.ViewHolder{
-        private TextView txtNome;
+        private TextView txtNome, txtEmail, txtRa, txtEntrada;
         ParticipanteHolder(View itemView){
             super(itemView);
-            txtNome = itemView.findViewById(R.id.txtNomeParticipante_card_participante);
+            txtNome = itemView.findViewById(R.id.txtNomeParticipante_cardParticipante);
+            txtEmail = itemView.findViewById(R.id.txtEmailParticipante_cardParticipante);
+            txtRa = itemView.findViewById(R.id.txtRa_cardPArticipante);
+            txtEntrada = itemView.findViewById(R.id.txtEntrada_cardPArticipante);
         }
         void setDetails(Participante participante){
             txtNome.setText(participante.getNome());
+            txtEmail.setText("Email: " + participante.getEmail());
+            txtRa.setText("RA: " + participante.getEmail());
+            txtEntrada.setText((participante.isSaida() ? "Saida Registrada" : "Presente"));
         }
     }
 }

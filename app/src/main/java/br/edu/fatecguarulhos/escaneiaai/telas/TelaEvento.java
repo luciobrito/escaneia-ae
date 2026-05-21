@@ -2,14 +2,22 @@ package br.edu.fatecguarulhos.escaneiaai.telas;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.text.InputFilter;
+import android.text.InputType;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -86,7 +94,12 @@ public class TelaEvento extends AppCompatActivity {
         fabEditarEvento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                telaEditarEvento();
+                if(validarIdCelular()){
+                    telaEditarEvento();
+                } else {
+                    pedirSenha();
+                }
+
             }
         });
     }
@@ -119,6 +132,49 @@ public class TelaEvento extends AppCompatActivity {
         Intent it = new Intent(this, TelaEditarEvento.class);
         it.putExtra("jsonEvento", eventoJson);
         startActivity(it);
+    }
+    private void pedirSenha(){
+        final EditText inputSenha = new EditText(this);
+
+        inputSenha.setEms(4);
+        inputSenha.setInputType(InputType.TYPE_CLASS_NUMBER);
+        inputSenha.setFilters(new InputFilter[]{new InputFilter.LengthFilter(4)});
+        inputSenha.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+        FrameLayout container = new FrameLayout(this);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        params.gravity = Gravity.CENTER;
+        container.addView(inputSenha, params);
+
+        new AlertDialog.Builder(TelaEvento.this)
+                .setTitle("Sem permissão")
+                .setMessage("Digite a senha para continuar:")
+                .setView(container)
+                .setPositiveButton("Confirmar", (dialog, whichButton) -> {
+                    String strSenha = inputSenha.getText().toString();
+                    if(strSenha.equals(evento.getSenha())){
+                        dialog.dismiss();
+                        telaEditarEvento();
+                    } else {
+                        dialog.dismiss();
+                        Toast.makeText(TelaEvento.this, "Senha incorreta!", Toast.LENGTH_SHORT).show();
+                    }
+
+                })
+                .setNegativeButton("Cancelar", (dialog, whichButton) -> {
+                    dialog.dismiss();
+                })
+                .show();
+    }
+    private void validarSenha(){}
+    private boolean validarIdCelular(){
+        return (evento.getIdCriador().equals(getIdCelular()));
+    }
+    private String getIdCelular(){
+        return Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
     public void voltar(View view){

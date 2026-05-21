@@ -22,7 +22,7 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/txtNomeParticipante_card_participante"
+            android:id="@+id/txtNomeParticipante_cardParticipante"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nome do Participante"
@@ -32,7 +32,23 @@
             android:layout_marginBottom="4dp" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/txtEntrada_cardPArticipante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="RA: 00000000000"
+            android:textColor="#AAAAAA"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txtEmailParticipante_cardParticipante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="RA: 00000000000"
+            android:textColor="#AAAAAA"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txtRa_cardPArticipante"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="RA: 00000000000"

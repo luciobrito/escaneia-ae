@@ -2,6 +2,7 @@ package br.edu.fatecguarulhos.escaneiaai.telas;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -94,7 +96,9 @@ public class TelaCriarEvento extends AppCompatActivity {
             e.setTitulo(edtNomeEvento.getText().toString());
             e.setDataInicio(edtDataInicio.getText().toString());
             e.setDataFim(edtDataFim.getText().toString());
+            String idHash = String.valueOf(getIdCelular().hashCode());
             e.setIdCriador(getIdCelular());
+            e.setSenha(idHash.substring(0,4));
             e.setLocal(edtLocal.getText().toString());
             e.setDescricao(edtDescricao.getText().toString());
 
@@ -107,7 +111,8 @@ public class TelaCriarEvento extends AppCompatActivity {
         if(e != null){
             dbConnection.adicionarEvento(e);
             Toast.makeText(this, "Evento criado com sucesso",Toast.LENGTH_SHORT).show();
-            finish();
+            mostrarSenha(e.getSenha());
+            limparCampos();
         }
     }
     private boolean validarDados(){
@@ -125,6 +130,23 @@ public class TelaCriarEvento extends AppCompatActivity {
             return false;
         }
         return true;
+
+    }
+    private void mostrarSenha(String senha){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Senha: " + senha);
+        builder.setMessage("Use esta senha para alterar seus eventos a partir de outro dispositivo.");
+
+// Set the Positive (Yes/OK) button
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Code to execute when OK is clicked
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
 
     }
     private void mostrarEscolhaDateTime(EditText edtData){
@@ -185,6 +207,14 @@ public class TelaCriarEvento extends AppCompatActivity {
             return null;
         }
     }
+    private void limparCampos(){
+        edtNomeEvento.setText("");
+        edtDataInicio.setText("");
+        edtDataFim.setText("");
+        edtLocal.setText("");
+        edtDescricao.setText("");
+    }
+
 
 }
 
