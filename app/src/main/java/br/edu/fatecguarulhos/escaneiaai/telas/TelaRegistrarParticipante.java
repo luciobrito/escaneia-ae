@@ -18,10 +18,11 @@ import java.util.NoSuchElementException;
 import br.edu.fatecguarulhos.escaneiaai.R;
 import br.edu.fatecguarulhos.escaneiaai.dao.ParticipanteDao;
 import br.edu.fatecguarulhos.escaneiaai.models.Participante;
+import br.edu.fatecguarulhos.escaneiaai.util.CacheHelper;
 
 public class TelaRegistrarParticipante extends AppCompatActivity {
     private boolean isEntrada;
-    private String eventoJson;
+    private String eventoJson, inputNome, inputEmail, inputRa;
     private EditText edtNome, edtEmail, edtRa;
     private Button btnRegistrar;
     @Override
@@ -50,6 +51,7 @@ public class TelaRegistrarParticipante extends AppCompatActivity {
         btnRegistrar = findViewById(R.id.btnRegistrar_FormRegistrarParticipante);
     }
     private void configurarComponentes(){
+        carregarCache();
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,13 +62,12 @@ public class TelaRegistrarParticipante extends AppCompatActivity {
     }
     private Participante criarParticipante(){
         Participante p = new Participante();
-        String nome, email, ra;
-        nome = edtNome.getText().toString();
-        email = edtEmail.getText().toString();
-        ra = edtRa.getText().toString();
-        p.setNome(nome);
-        p.setEmail(email);
-        p.setRa(ra);
+        inputNome = edtNome.getText().toString();
+        inputEmail = edtEmail.getText().toString();
+        inputRa = edtRa.getText().toString();
+        p.setNome(inputNome);
+        p.setEmail(inputEmail);
+        p.setRa(inputRa);
         return p;
     }
     private void registrarParticipante(Participante p){
@@ -75,6 +76,7 @@ public class TelaRegistrarParticipante extends AppCompatActivity {
                 registrarEntrada(p);
             else
                 registrarSaida(p);
+            salvarCache();
             finish();
         } catch (IllegalArgumentException iae){
             Toast.makeText(this, iae.getMessage(), Toast.LENGTH_SHORT).show();
@@ -93,6 +95,15 @@ public class TelaRegistrarParticipante extends AppCompatActivity {
         ParticipanteDao dbConnection = new ParticipanteDao();
         dbConnection.registrarSaidaParticipante(eventoJson, p);
         Toast.makeText(this, "Saida confirmada!", Toast.LENGTH_SHORT).show();
+    }
+    public void salvarCache(){
+        CacheHelper.saveToCache(this, inputNome, inputEmail, inputRa);
+    }
+    public void carregarCache(){
+        String[] dadosCache = CacheHelper.getFromCache(this);
+        edtNome.setText(dadosCache[0]);
+        edtEmail.setText(dadosCache[1]);
+        edtRa.setText(dadosCache[2]);
     }
 
 
