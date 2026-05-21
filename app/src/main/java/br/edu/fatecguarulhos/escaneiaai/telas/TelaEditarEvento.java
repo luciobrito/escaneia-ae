@@ -131,7 +131,9 @@ public class TelaEditarEvento extends AppCompatActivity {
                 evento.setTitulo(edtNome.getText().toString().trim());
                 evento.setLocal(edtLocal.getText().toString().trim());
                 evento.setDescricao(edtDescricao.getText().toString().trim());
-                evento.setDataInicio(edtDataInicio.getText().toString());
+                String dataInicio = edtDataInicio.getText().toString();
+                evento.setDataInicio(dataInicio);
+                evento.setMomentoInicio(converterData(dataInicio));
                 evento.setDataFim(edtDataFim.getText().toString());
                 EventoDao eventoDAO = new EventoDao();
                 eventoDAO.updateEvento(evento);
@@ -209,6 +211,17 @@ public class TelaEditarEvento extends AppCompatActivity {
             e.printStackTrace();
             return null;
         }
+    }
+    private String converterData(String dataInicio){
+        String[] dataHora = dataInicio.split(" - ");
+        String[] dataFatia = dataHora[0].split("/");
+        String[] horaFatia = dataHora[1].split(":");
+        String momentoInicio = dataFatia[2];
+        momentoInicio = momentoInicio + dataFatia[1];
+        momentoInicio = momentoInicio + dataFatia[0];
+        momentoInicio = momentoInicio + horaFatia[0];
+        momentoInicio = momentoInicio + horaFatia[1];
+        return momentoInicio;
     }
 
 

@@ -93,8 +93,10 @@ public class TelaCriarEvento extends AppCompatActivity {
 
             Evento e = new Evento();
             e.setTitulo(edtNomeEvento.getText().toString().trim());
-            e.setDataInicio(edtDataInicio.getText().toString());
+            String dataInicio = edtDataInicio.getText().toString();
+            e.setDataInicio(dataInicio);
             e.setDataFim(edtDataFim.getText().toString());
+            e.setMomentoInicio(converterData(dataInicio));
             String idHash = String.valueOf(getIdCelular().hashCode());
             e.setIdCriador(getIdCelular());
             e.setSenha(idHash.substring(2,6));
@@ -172,6 +174,17 @@ public class TelaCriarEvento extends AppCompatActivity {
         if(d1.equals(d2))
             return true;
         return(d1.before(d2));
+    }
+    private String converterData(String dataInicio){
+        String[] dataHora = dataInicio.split(" - ");
+        String[] dataFatia = dataHora[0].split("/");
+        String[] horaFatia = dataHora[1].split(":");
+        String momentoInicio = dataFatia[2];
+        momentoInicio = momentoInicio + dataFatia[1];
+        momentoInicio = momentoInicio + dataFatia[0];
+        momentoInicio = momentoInicio + horaFatia[0];
+        momentoInicio = momentoInicio + horaFatia[1];
+        return momentoInicio;
     }
     private boolean validarTitulo(EditText campoNome){
         String input = campoNome.getText().toString().trim();

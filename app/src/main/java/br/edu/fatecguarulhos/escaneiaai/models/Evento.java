@@ -14,9 +14,8 @@ import br.edu.fatecguarulhos.escaneiaai.util.QrCodeManager;
 
 public class Evento {
     private String titulo, id, idCriador, senha, local, descricao;
-    private String dataInicio, dataFim;
+    private String dataInicio, dataFim, momentoInicio;
     private List<Participante> participantes = new ArrayList<>();
-    //private DateTime dataInicio, dataFim,
     private Bitmap qrCode;
 
     public Bitmap getQrCode() {
@@ -117,5 +116,13 @@ public class Evento {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public String getMomentoInicio() {
+        return momentoInicio;
+    }
+
+    public void setMomentoInicio(String momentoInicio) {
+        this.momentoInicio = momentoInicio;
     }
 }

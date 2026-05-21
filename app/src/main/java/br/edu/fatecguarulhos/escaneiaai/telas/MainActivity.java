@@ -97,6 +97,8 @@ public class MainActivity extends AppCompatActivity {
     public void atualizarListaEventos(List<Evento> lista){
         ll.removeAllViewsInLayout();
         List<CardEvento> eventosEncerrados = new ArrayList<>();
+
+
         for(Evento e : lista) {
             CardEvento card = new CardEvento(this);
             card.alterarConteudo(e);
