@@ -123,7 +123,6 @@ public class TelaEditarEvento extends AppCompatActivity {
                         }
                     }})
                 .setNegativeButton(android.R.string.no, null).show();
-
     }
     public void editarEvento(){
         try{
