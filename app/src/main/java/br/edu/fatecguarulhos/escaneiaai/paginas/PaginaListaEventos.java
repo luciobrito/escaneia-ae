@@ -124,11 +124,11 @@ public class PaginaListaEventos extends Fragment {
     }
 
     public void atualizarListaEventos(List<Evento> lista){
-        lista.sort(Comparator.comparingInt(Evento::pegarDataAsInt));
+        //lista.sort(Comparator.comparingInt(Evento::pegarDataAsInt));
         ll.removeAllViewsInLayout();
-        for(int i = lista.size(); i >= 0 ; i--){
+        for(Evento e : lista){
             CardEvento card = new CardEvento((getContext()));
-            card.alterarConteudo(lista.get(i-1));
+            card.alterarConteudo(e);
             ll.addView(card);
         }
     }

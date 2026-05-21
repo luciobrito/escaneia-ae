@@ -59,6 +59,8 @@ public class EventoDao {
 
     public void getAllEventos(FirebaseCallback callback) {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("eventos");
+
+
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
