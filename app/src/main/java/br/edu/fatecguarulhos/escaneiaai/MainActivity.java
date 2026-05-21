@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -20,30 +19,23 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.List;
 
 import br.edu.fatecguarulhos.escaneiaai.components.CardEvento;
 import br.edu.fatecguarulhos.escaneiaai.dao.EventoDao;
 import br.edu.fatecguarulhos.escaneiaai.interfaces.FirebaseCallback;
-import br.edu.fatecguarulhos.escaneiaai.interfaces.Imprimivel;
 import br.edu.fatecguarulhos.escaneiaai.models.Evento;
-import br.edu.fatecguarulhos.escaneiaai.paginas.PaginaListaEventos;
-import br.edu.fatecguarulhos.escaneiaai.paginas.PaginaEventos;
 import br.edu.fatecguarulhos.escaneiaai.telas.CameraLeitorCode;
 import br.edu.fatecguarulhos.escaneiaai.telas.TelaCriarEvento;
-import br.edu.fatecguarulhos.escaneiaai.util.ImpressoraTermica;
 
 public class MainActivity extends AppCompatActivity {
     private LinearLayout ll;
     private EventoDao dbConnection;
     private FloatingActionButton btnQrCode;
-    private BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         try{
             inicializarValores();
             configurarComponentes();
-            //configurarNavbar();
         } catch (RuntimeException re){
             Toast.makeText(this, re.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -115,54 +106,6 @@ public class MainActivity extends AppCompatActivity {
             CardEvento card = new CardEvento(this);
             card.alterarConteudo(e);
             ll.addView(card);
-        }
-    }
-
-    /*
-    private void configurarNavbar(){
-        iniciarMenuItem(R.id.item_eventos);
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                int id = menuItem.getItemId();
-                iniciarMenuItem(id);
-                return true;
-            }
-        });
-    }
-    // identificar qual dos 2 botões de baixo foi clicado
-    private void iniciarMenuItem(int id) {
-        Fragment selectedFragment = null;
-        if (id == R.id.item_eventos) {
-            // Lista de eventos
-            selectedFragment = new PaginaListaEventos();
-        }
-        if(id == R.id.item_perfil){
-            // outra pagina
-            selectedFragment = new PaginaEventos();
-        }
-        if (selectedFragment != null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
-        }
-
-    }
-
-     */
-    public void imprimir(View view){
-        try {
-            if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.S && ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.BLUETOOTH},1);
-            } else if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.S && ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_ADMIN) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.BLUETOOTH_ADMIN}, 2);
-            } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S && ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.BLUETOOTH_CONNECT}, 3);
-            } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S && ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.BLUETOOTH_SCAN}, 4);
-            } else {
-            }
-
-        } catch (Exception e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
     @Override

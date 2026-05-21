@@ -18,7 +18,6 @@ import java.util.NoSuchElementException;
 
 import br.edu.fatecguarulhos.escaneiaai.models.Evento;
 import br.edu.fatecguarulhos.escaneiaai.models.Participante;
-import br.edu.fatecguarulhos.escaneiaai.paginas.PaginaEventos;
 
 public class ParticipanteDao {
     private FirebaseDatabase database;
