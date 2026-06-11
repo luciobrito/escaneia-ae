@@ -94,30 +94,6 @@
                 app:cornerRadius="12dp" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnImprimirQrCode_telaQrCode"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginBottom="8dp"
-                android:onClick="imprimirQrCodeEntrada"
-                android:text="IMPRIMIR ENTRADA"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:backgroundTint="#9333EA"
-                app:cornerRadius="12dp" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_qrCodeSaida"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginBottom="24dp"
-                android:onClick="imprimirQrCodeSaida"
-                android:text="IMPRIMIR SAÍDA"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:backgroundTint="#9333EA"
-                app:cornerRadius="12dp" />
-
-            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnVolta_telaQrCode"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
